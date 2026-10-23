@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Marcellus&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="img/loja-balcao.webp">
+<script>document.documentElement.classList.add("js");</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -82,11 +83,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* topo */
 .topo { position: sticky; top: 0; z-index: 30; background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--linha); }
-.topo-in { display: flex; align-items: center; gap: 1.5rem; min-height: 72px; }
+.topo-in { display: flex; align-items: center; gap: 1.5rem; min-height: 84px; }
 .marca { display: inline-flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--bronze); line-height: 1; min-height: 44px; justify-content: center; }
-.marca b { font-family: var(--titulo); font-weight: 400; font-size: 1.75rem; letter-spacing: .32em; margin-right: -.32em; }
-.marca small { font-size: .62rem; letter-spacing: .5em; margin-right: -.5em; margin-top: .3rem; display: flex; align-items: center; gap: .5rem; }
-.marca small::before, .marca small::after { content: ""; width: 14px; height: 1px; background: currentColor; }
+.marca b { font-family: var(--titulo); font-weight: 400; font-size: 2.3rem; letter-spacing: .32em; margin-right: -.32em; }
+.marca small { font-size: .78rem; letter-spacing: .5em; margin-right: -.5em; margin-top: .35rem; display: flex; align-items: center; gap: .5rem; }
+.marca small::before, .marca small::after { content: ""; width: 18px; height: 1px; background: currentColor; }
 .menu { display: flex; gap: .3rem; margin-left: auto; }
 .menu a { padding: .6rem .8rem; color: var(--texto); text-decoration: none; border-radius: 999px; transition: background-color .25s; }
 .menu a:hover { background: var(--nevoa); }
@@ -109,10 +110,19 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .faixa-fotos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: min(78vh, 720px); min-height: 540px; }
 .faixa-fotos img { width: 100%; height: 100%; object-fit: cover; }
 .faixa-fotos .foto-balcao { object-position: 50% 30%; }
+/* fotos aparecem aos poucos (só com JavaScript ligado) */
+.js .revelar { opacity: 0; transform: translateY(28px) scale(.97); transition: opacity .9s ease-out, transform 1.3s cubic-bezier(.16, .8, .24, 1); }
+.js .revelar.visivel { opacity: 1; transform: none; }
+.js .abertura .revelar { transform: scale(1.1); transition-duration: 1.2s, 2.2s; }
+.js .abertura .revelar.visivel { transform: none; }
+.js .faixa-fotos .revelar:nth-child(2) { transition-delay: .2s; }
+.js .faixa-fotos .revelar:nth-child(3) { transition-delay: .4s; }
+.js .faixa-fotos .revelar:nth-child(4) { transition-delay: .6s; }
+.js .loja-fotos .revelar:nth-child(2) { transition-delay: .25s; }
 .abertura::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(58,46,42,.95) 0%, rgba(58,46,42,.9) 34%, rgba(58,46,42,.3) 50%, rgba(58,46,42,0) 58%); z-index: 1; }
 .abertura-texto { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; }
-.abertura-texto .envelope > div { max-width: 34rem; }
-.abertura h1 { font-size: clamp(2.3rem, 4.4vw, 3.9rem); margin-bottom: 1.2rem; }
+.abertura-texto .envelope > div { max-width: 38rem; }
+.abertura h1 { font-size: clamp(2.3rem, 4vw, 3.5rem); margin-bottom: 1.2rem; }
 .abertura h1 span { display: block; }
 .abertura p { font-size: 1.15rem; color: #F3E9E3; max-width: 30rem; margin-bottom: 2rem; }
 .abertura .botoes { display: flex; flex-wrap: wrap; gap: .8rem; }
@@ -130,22 +140,25 @@ button, input, select, textarea { font: inherit; color: inherit; }
 
 /* fatos */
 .fatos { border-bottom: 1px solid var(--linha); }
-.fatos ul { list-style: none; margin: 0; padding: 1.1rem 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
-.fatos li { display: flex; align-items: center; gap: .7rem; color: var(--suave); }
+.fatos ul { list-style: none; margin: 0; padding: 1.1rem 0; display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem clamp(2rem, 6vw, 5rem); }
+.fatos li { display: flex; align-items: center; justify-content: center; text-align: center; gap: .7rem; color: var(--suave); }
 .fatos li strong { color: var(--texto); font-weight: 500; }
 .fatos svg { width: 26px; height: 26px; flex: none; color: var(--bronze); }
 .fatos a { color: inherit; text-decoration-color: var(--linha); text-underline-offset: 3px; }
 
 /* seções */
 .secao { padding: clamp(3.5rem, 7vw, 6rem) 0; }
-main section[id] { scroll-margin-top: 72px; }
+main section[id] { scroll-margin-top: 84px; }
 .secao-nevoa { background: var(--nevoa); }
 .cabeca { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 2rem; }
 .cabeca h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); }
 .cabeca p { color: var(--suave); max-width: 34rem; margin-top: .6rem; }
 
 /* filtros e vitrine */
-.filtros { display: flex; flex-wrap: wrap; gap: .5rem; }
+.filtros { display: grid; gap: .7rem; margin: -.6rem 0 2.2rem; }
+.filtro-linha { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
+.filtro-rotulo { min-width: 3.6rem; color: var(--suave); font-size: .95rem; }
+.filtro-op { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; }
 .filtros button { min-height: 44px; padding: .45rem 1.1rem; border-radius: 999px; border: 1px solid var(--linha); background: #fff; cursor: pointer; transition: background-color .25s, border-color .25s, color .25s; }
 .filtros button:hover { border-color: var(--bronze); }
 .filtros button[aria-pressed="true"] { background: var(--cacau); border-color: var(--cacau); color: #fff; }
@@ -161,7 +174,7 @@ main section[id] { scroll-margin-top: 72px; }
 .peca .tam { color: var(--suave); font-size: .92rem; }
 .cores-mini { display: flex; gap: .35rem; margin-top: .4rem; }
 .cores-mini span { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
-.vitrine-vazia { color: var(--suave); }
+.vitrine-vazia { grid-column: 1 / -1; color: var(--suave); display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; }
 
 /* ficha */
 dialog { border: 0; padding: 0; color: var(--texto); background: #fff; }
@@ -243,10 +256,12 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .balao-rotulo { font-size: .9rem; color: var(--suave); }
 
 /* loja */
-.loja-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
-.loja-fotos { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
-.loja-fotos img { border-radius: var(--raio); aspect-ratio: 9 / 16; object-fit: cover; width: 100%; }
-.loja-fotos img:nth-child(2) { margin-top: 3rem; }
+.loja-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: stretch; }
+/* as duas fotos ocupam do título até o fim do mapa, uma mais alta e outra mais baixa */
+.loja-fotos { position: relative; min-height: 420px; }
+.loja-fotos img { position: absolute; width: calc(50% - .5rem); height: calc(100% - 3.5rem); border-radius: var(--raio); object-fit: cover; }
+.loja-fotos img:nth-child(1) { top: 0; left: 0; }
+.loja-fotos img:nth-child(2) { bottom: 0; right: 0; }
 .loja-texto h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin-bottom: 1rem; }
 .loja-texto > p { color: var(--suave); max-width: 34rem; }
 .loja-dados { list-style: none; margin: 1.6rem 0; padding: 0; display: grid; gap: .8rem; }
@@ -261,13 +276,19 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .mapa-capa svg { width: 22px; height: 22px; color: var(--bronze); }
 .mapa iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-/* como comprar */
-.passos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; counter-reset: etapa; }
-.passos li { background: #fff; border: 1px solid var(--linha); border-radius: var(--raio); padding: 1.5rem; counter-increment: etapa; min-width: 0; }
-.passos li::before { content: counter(etapa); display: block; font-family: var(--titulo); font-size: 2.4rem; color: var(--bronze); line-height: 1; margin-bottom: .8rem; }
-.passos h3 { font-family: var(--corpo); font-weight: 500; font-size: 1.08rem; margin-bottom: .4rem; }
-.passos p { color: var(--suave); font-size: .98rem; }
-.ramo-divisor { display: block; width: 200px; margin: 0 auto 2rem; }
+/* avaliações */
+.avaliacoes-grade { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 2fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+.nota h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin-bottom: 1rem; }
+.nota-numero { font-family: var(--titulo); font-size: clamp(4rem, 8vw, 5.6rem); line-height: 1; color: var(--bronze); }
+.nota-texto { color: var(--suave); margin: .6rem 0 1.4rem; max-width: 18rem; }
+.estrelas { display: inline-flex; gap: .2rem; color: #A8742E; }
+.estrelas svg { width: 20px; height: 20px; }
+.depoimentos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
+.depoimentos li { background: #fff; border: 1px solid var(--linha); border-radius: var(--raio); padding: 1.5rem; display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.depoimentos .estrelas svg { width: 16px; height: 16px; }
+.depoimentos blockquote { margin: 0; font-family: var(--titulo); font-size: 1.2rem; line-height: 1.45; flex: 1; }
+.autora { color: var(--suave); font-size: .95rem; }
+.ramo-divisor { position: static; display: block; width: 200px; margin: 0 0 1.6rem -6px; }
 
 /* rodapé */
 .rodape { background: var(--cacau); color: #E9DCD4; padding: 3.5rem 0 calc(2rem + env(safe-area-inset-bottom)); }
@@ -380,7 +401,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 }
 @media (max-width: 1100px) {
   .vitrine { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .passos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .avaliacoes-grade { grid-template-columns: minmax(0, 1fr); }
   .rodape-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 960px) {
@@ -397,14 +418,19 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .faixa-fotos .foto-balcao { order: -1; }
   .abertura-texto { position: static; padding: 2.4rem 0 2.8rem; }
   .tamanho-grade, .loja-grade { grid-template-columns: minmax(0, 1fr); }
-  .fatos ul { grid-template-columns: minmax(0, 1fr); gap: .6rem; }
+  .loja-fotos { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
+  .loja-fotos img { position: static; width: 100%; height: auto; aspect-ratio: 9 / 16; }
+  .loja-fotos img:nth-child(2) { margin-top: 2.5rem; }
+  .fatos ul { flex-direction: column; align-items: center; gap: .6rem; }
 }
 @media (max-width: 700px) {
   body { font-size: 1rem; }
   .sacola-botao .rotulo { display: none; }
   .sacola-botao { padding: .4rem .75rem; }
-  .marca b { font-size: min(1.75rem, 8vw); }
-  .marca small { font-size: min(.62rem, 2.9vw); }
+  .topo-in { min-height: 72px; }
+  main section[id] { scroll-margin-top: 72px; }
+  .marca b { font-size: min(2rem, 9vw); }
+  .marca small { font-size: min(.7rem, 3.2vw); }
   .topo-in { gap: .3rem; }
   #menu-botao { margin-right: -10px; }
   .item { grid-template-columns: 64px minmax(0, 1fr); }
@@ -425,9 +451,8 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .sacola { border-radius: 0; }
   .form-tam .tres { grid-template-columns: minmax(0, 1fr); }
   .form-tam .duas { grid-template-columns: minmax(0, 1fr); }
-  .passos { grid-template-columns: minmax(0, 1fr); }
+  .depoimentos { grid-template-columns: minmax(0, 1fr); }
   .rodape-grade { grid-template-columns: minmax(0, 1fr); }
-  .loja-fotos img:nth-child(2) { margin-top: 2rem; }
 }
 @media (max-width: 760px) {
   .checkout { width: 100%; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; }
@@ -511,7 +536,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
       <a href="#colecao">Coleção</a>
       <a href="#tamanho">Seu tamanho</a>
       <a href="#loja">A loja</a>
-      <a href="#como-comprar">Como comprar</a>
+      <a href="#avaliacoes">Avaliações</a>
       <a class="menu-zap" href="https://wa.me/5516974064343" target="_blank" rel="noopener">WhatsApp (16) 97406-4343</a>
     </nav>
     <button class="sacola-botao" type="button" id="abrir-sacola" aria-haspopup="dialog">
@@ -525,10 +550,10 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 <main id="inicio">
   <section class="abertura" aria-labelledby="titulo-abertura">
     <div class="faixa-fotos">
-      <img src="img/aladim-verde.webp" width="750" height="1000" alt="Cliente com o Conjunto Aladim verde ao lado da arara de cores">
-      <img src="img/macacao-branco.webp" width="750" height="1000" alt="Macacão branco da Coleção Fascínio">
-      <img src="img/listrado.webp" width="750" height="1000" alt="Conjunto listrado azul-marinho e branco na entrada da loja">
-      <img class="foto-balcao" src="img/loja-balcao.webp" width="720" height="1280" alt="Balcão da SISS Store, com o logo na parede de mármore e galhos de flores rosas">
+      <img class="revelar" src="img/aladim-verde.webp" width="750" height="1000" alt="Cliente com o Conjunto Aladim verde ao lado da arara de cores">
+      <img class="revelar" src="img/macacao-branco.webp" width="750" height="1000" alt="Macacão branco da Coleção Fascínio">
+      <img class="revelar" src="img/listrado.webp" width="750" height="1000" alt="Conjunto listrado azul-marinho e branco na entrada da loja">
+      <img class="foto-balcao revelar" src="img/loja-balcao.webp" width="720" height="1280" alt="Balcão da SISS Store, com o logo na parede de mármore e galhos de flores rosas">
     </div>
     <svg class="galho galho-abertura" viewBox="0 0 640 260" aria-hidden="true">
       <path class="ramo" stroke-width="5" d="M-10 30C80 40 150 62 230 56s150-36 230-20 120 36 190 30"/>
@@ -545,8 +570,8 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     <div class="abertura-texto">
       <div class="envelope">
         <div>
-          <h1 id="titulo-abertura"><span>Moda feminina</span> <span>do P ao GG</span> <span>e do 44 ao 50</span></h1>
-          <p>Peças escolhidas uma a uma para a nossa loja em Cravinhos. Escolha aqui, pague pelo Pix ou cartão e receba em qualquer lugar do Brasil.</p>
+          <h1 id="titulo-abertura"><span>Moda que floresce</span> <span>em todos os tamanhos</span></h1>
+          <p>Do P ao GG e do 44 ao 50, com peças escolhidas uma a uma para a nossa loja em Cravinhos. Pague pelo Pix ou cartão e receba em qualquer lugar do Brasil.</p>
           <div class="botoes">
             <a class="btn btn-claro" href="#colecao">Ver a coleção</a>
             <a class="btn btn-vidro" href="https://wa.me/5516974064343?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SISS%20Store." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Falar no WhatsApp</a>
@@ -571,12 +596,10 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
           <h2 id="titulo-colecao">Coleção</h2>
           <p>Toque na peça para escolher a cor e o tamanho.</p>
         </div>
-        <div class="filtros" role="group" aria-label="Filtrar peças" id="filtros">
-          <button type="button" data-filtro="todas" aria-pressed="true">Todas</button>
-          <button type="button" data-filtro="fascinio" aria-pressed="false">Coleção Fascínio</button>
-          <button type="button" data-filtro="plus" aria-pressed="false">Do 44 ao 50</button>
-          <button type="button" data-filtro="promo" aria-pressed="false">Coleção promocional</button>
-        </div>
+      </div>
+      <div class="filtros" id="filtros">
+        <div class="filtro-linha" role="group" aria-labelledby="rotulo-tipo"><span class="filtro-rotulo" id="rotulo-tipo">Peças</span><div class="filtro-op" data-grupo="tipo"></div></div>
+        <div class="filtro-linha" role="group" aria-labelledby="rotulo-linha"><span class="filtro-rotulo" id="rotulo-linha">Linhas</span><div class="filtro-op" data-grupo="linha"></div></div>
       </div>
       <ul class="vitrine" id="vitrine" aria-live="polite">
         <li class="peca"><div class="peca-foto"></div><h3>&nbsp;</h3><p>&nbsp;</p></li>
@@ -624,8 +647,8 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   <section class="secao" id="loja" aria-labelledby="titulo-loja">
     <div class="envelope loja-grade">
       <div class="loja-fotos">
-        <img src="img/loja-balcao.webp" width="720" height="1280" alt="Balcão de mármore da SISS Store com o logo na parede" loading="lazy">
-        <img src="img/loja-equipe.webp" width="720" height="1280" alt="Equipe da SISS Store no balcão da loja" loading="lazy">
+        <img class="revelar" src="img/loja-balcao.webp" width="720" height="1280" alt="Balcão de mármore da SISS Store com o logo na parede" loading="lazy">
+        <img class="revelar" src="img/loja-equipe.webp" width="720" height="1280" alt="Equipe da SISS Store no balcão da loja" loading="lazy">
       </div>
       <div class="loja-texto">
         <h2 id="titulo-loja">Nossa loja em Cravinhos</h2>
@@ -643,7 +666,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     </div>
   </section>
 
-  <section class="secao secao-nevoa" id="como-comprar" aria-labelledby="titulo-como">
+  <section class="secao secao-nevoa" id="avaliacoes" aria-labelledby="titulo-avaliacoes">
     <div class="envelope">
       <svg class="ramo-divisor galho" viewBox="0 0 200 50" aria-hidden="true">
         <path class="ramo" stroke-width="2.5" d="M4 32c40-10 80-14 120-8s50 4 72-6"/>
@@ -651,13 +674,32 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
         <use href="#flor" x="102" y="18" width="24" height="24"/>
         <use href="#flor" x="150" y="2" width="26" height="26"/>
       </svg>
-      <div class="cabeca"><div><h2 id="titulo-como">Como comprar</h2><p>Compra pelo site, com entrega para todo o Brasil ou retirada na loja.</p></div></div>
-      <ol class="passos">
-        <li><h3>Escolha as peças</h3><p>Selecione a cor e o tamanho na coleção e adicione à sacola.</p></li>
-        <li><h3>Informe a entrega</h3><p>Digite o CEP e escolha entre PAC, SEDEX ou retirada na loja, em Cravinhos.</p></li>
-        <li><h3>Pague pelo site</h3><p>Pix com aprovação na hora ou cartão de crédito em até 3 vezes sem juros.</p></li>
-        <li><h3>Acompanhe o pedido</h3><p>Você recebe as atualizações no e-mail até a peça chegar ou ficar pronta para retirada.</p></li>
-      </ol>
+      <div class="avaliacoes-grade">
+        <div class="nota">
+          <h2 id="titulo-avaliacoes">Avaliações</h2>
+          <p class="nota-numero">4,9</p>
+          <span class="estrelas" role="img" aria-label="Nota 4,9 de 5"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
+          <p class="nota-texto">55 avaliações no Google, 53 delas com 5 estrelas.</p>
+          <a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&amp;query=Siss+Store+Rua+15+de+Novembro+129+Cravinhos" target="_blank" rel="noopener">Ver todas no Google</a>
+        </div>
+        <ul class="depoimentos">
+          <li>
+            <span class="estrelas" role="img" aria-label="5 de 5 estrelas"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
+            <blockquote>“Eu simplesmente amo essa loja! […] entende e valoriza todos os tipos de corpos.”</blockquote>
+            <p class="autora">Cris S., no Google</p>
+          </li>
+          <li>
+            <span class="estrelas" role="img" aria-label="5 de 5 estrelas"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
+            <blockquote>“Peças de qualidade! Atendimento maravilhoso!”</blockquote>
+            <p class="autora">Patricia C., no Google</p>
+          </li>
+          <li>
+            <span class="estrelas" role="img" aria-label="5 de 5 estrelas"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
+            <blockquote>“Loja maravilhosa peças lindas.”</blockquote>
+            <p class="autora">Juliana F., no Google</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 </main>
@@ -666,7 +708,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   <div class="envelope">
     <div class="rodape-grade">
       <div><a class="marca" href="#inicio" aria-label="SISS Store, voltar ao início"><b>SISS</b><small>STORE</small></a></div>
-      <div><h2>Navegação</h2><ul><li><a href="#colecao">Coleção</a></li><li><a href="#tamanho">Seu tamanho</a></li><li><a href="#loja">A loja</a></li><li><a href="#como-comprar">Como comprar</a></li></ul></div>
+      <div><h2>Navegação</h2><ul><li><a href="#colecao">Coleção</a></li><li><a href="#tamanho">Seu tamanho</a></li><li><a href="#loja">A loja</a></li><li><a href="#avaliacoes">Avaliações</a></li></ul></div>
       <div><h2>Atendimento</h2><ul><li><a href="https://wa.me/5516974064343" target="_blank" rel="noopener">WhatsApp (16) 97406-4343</a></li><li><a href="https://www.instagram.com/_sissstore/" target="_blank" rel="noopener">Instagram @_sissstore</a></li></ul></div>
       <div><h2>Endereço</h2><p>Rua XV de Novembro, 129<br>Centro, Cravinhos/SP<br>14140-000</p></div>
     </div>
@@ -726,30 +768,33 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 <script>
 const WHATSAPP = "5516974064343";
 
-// Peças: para cadastrar uma nova, copie um bloco. preco: null = "Consultar valor"; tamanhos: null = consultar.
+// Peças: para cadastrar uma nova, copie um bloco. tipo: um dos TIPOS abaixo; grupos: as linhas da peça. preco: null = "Consultar valor"; tamanhos: null = consultar.
+// Filtros: só aparecem os tipos e as linhas que têm alguma peça cadastrada.
+const TIPOS = [["conjuntos", "Conjuntos"], ["vestidos", "Vestidos"], ["macacoes", "Macacões"], ["saias", "Saias"], ["calcas", "Calças"], ["blusas", "Blusas"], ["camisetas", "Camisetas"]];
+const LINHAS = [["fascinio", "Coleção Fascínio"], ["plus", "Do 44 ao 50"], ["promo", "Coleção promocional"]];
 const PECAS = [
-  { id: "aladim", nome: "Conjunto Aladim", preco: 159, grupos: [], selo: "Destaque",
+  { id: "aladim", tipo: "conjuntos", nome: "Conjunto Aladim", preco: 159, grupos: [], selo: "Destaque",
     desc: "Caimento impecável, conforto e muita tendência em uma única produção.",
     tamanhos: ["P", "M", "G", "GG"],
     cores: [ { nome: "Marrom", hex: "#5B3F33", foto: "aladim-marrom" }, { nome: "Verde", hex: "#5E6B4F", foto: "aladim-verde" } ] },
-  { id: "listrado", nome: "Conjunto listrado", preco: 159, grupos: ["promo"], selo: "Promocional",
+  { id: "listrado", tipo: "conjuntos", nome: "Conjunto listrado", preco: 159, grupos: ["promo"], selo: "Promocional",
     desc: "Conjunto em listras da nossa Coleção Promocional, com ótimo caimento e tecido.",
     tamanhos: ["P", "M", "G", "GG"], cores: [ { nome: "Azul-marinho e branco", hex: "#1F2A44", foto: "listrado" } ] },
-  { id: "estruturado", nome: "Conjunto estruturado", preco: null, grupos: ["plus"],
+  { id: "estruturado", tipo: "conjuntos", nome: "Conjunto estruturado", preco: null, grupos: ["plus"],
     desc: "Um conjunto todo estruturado, elegante e cheio de personalidade.",
     tamanhos: ["44", "46", "48", "50"], cores: [ { nome: "Caramelo", hex: "#A27B5C", foto: "estruturado" } ] },
-  { id: "blusa-short", nome: "Conjunto blusa e short", preco: null, grupos: ["plus"],
+  { id: "blusa-short", tipo: "conjuntos", nome: "Conjunto blusa e short", preco: null, grupos: ["plus"],
     desc: "Peças que ficam lindas juntas e também rendem várias produções separadas.",
     tamanhos: ["44", "46", "48", "50"], cores: [ { nome: "Branco", hex: "#F4F1EC", foto: "blusa-short-branco" } ] },
-  { id: "macacao", nome: "Macacão branco", preco: null, grupos: ["fascinio"],
+  { id: "macacao", tipo: "macacoes", nome: "Macacão branco", preco: null, grupos: ["fascinio"],
     desc: "Peça da Coleção Fascínio.", tamanhos: null, cores: [ { nome: "Branco", hex: "#F4F1EC", foto: "macacao-branco" } ] },
-  { id: "blusa-renda", nome: "Blusa com renda nas costas", preco: null, grupos: ["fascinio"],
+  { id: "blusa-renda", tipo: "blusas", nome: "Blusa com renda nas costas", preco: null, grupos: ["fascinio"],
     desc: "Delicada, cheia de charme e com o detalhe nas costas que faz toda a diferença.",
     tamanhos: null, cores: [ { nome: "Amarelo", hex: "#EED36B", foto: "blusa-renda" } ] },
-  { id: "tshirt", nome: "T-shirt bordada", preco: null, grupos: ["fascinio"],
+  { id: "tshirt", tipo: "camisetas", nome: "T-shirt bordada", preco: null, grupos: ["fascinio"],
     desc: "Uma t-shirt nada óbvia, com bordado delicado e um toque de sofisticação.",
     tamanhos: null, cores: [ { nome: "Off-white", hex: "#F1ECE4", foto: "tshirt-bordada" } ] },
-  { id: "creme", nome: "Conjunto creme", preco: null, grupos: ["plus"],
+  { id: "creme", tipo: "conjuntos", nome: "Conjunto creme", preco: null, grupos: ["plus"],
     desc: "Moderno, elegante e com detalhes que fazem toda a diferença.",
     tamanhos: ["44", "46", "48", "50"], cores: [ { nome: "Creme", hex: "#EFE3BF", foto: "conjunto-creme" } ] },
 ];
@@ -763,16 +808,16 @@ const ler = (k, padrao) => { try { const v = localStorage.getItem(k); return v ?
 const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 
 /* vitrine */
-let filtro = "todas";
+const filtro = { tipo: "todas", linha: "todas" };
 function textoTam(p) {
   if (!p.tamanhos) return "Tamanhos: consultar";
   return p.tamanhos[0] + " ao " + p.tamanhos[p.tamanhos.length - 1];
 }
 function desenharVitrine() {
-  const lista = PECAS.filter(p => filtro === "todas" || p.grupos.includes(filtro));
+  const lista = PECAS.filter(p => (filtro.tipo === "todas" || p.tipo === filtro.tipo) && (filtro.linha === "todas" || p.grupos.includes(filtro.linha)));
   $("#vitrine").innerHTML = lista.length ? lista.map(p => `
     <li class="peca">
-      <button class="peca-foto" type="button" data-peca="${p.id}" aria-label="Ver ${esc(p.nome)}">
+      <button class="peca-foto revelar" type="button" data-peca="${p.id}" aria-label="Ver ${esc(p.nome)}">
         <img src="${foto(p.cores[0].foto)}" width="750" height="1000" alt="" loading="lazy">
         ${p.selo ? `<span class="selo">${esc(p.selo)}</span>` : ""}
       </button>
@@ -780,16 +825,27 @@ function desenharVitrine() {
       <p class="preco${p.preco ? "" : " consultar"}">${p.preco ? real(p.preco) : "Consultar valor"}</p>
       <p class="tam">${textoTam(p)}</p>
       ${p.cores.length > 1 ? `<div class="cores-mini" aria-label="${p.cores.length} cores">${p.cores.map(c => `<span style="background:${c.hex}" title="${esc(c.nome)}"></span>`).join("")}</div>` : ""}
-    </li>`).join("") : `<li class="vitrine-vazia">Nenhuma peça neste filtro no momento.</li>`;
+    </li>`).join("") : `<li class="vitrine-vazia"><span>Nenhuma peça com esses filtros no momento.</span><button class="btn btn-linha" type="button" data-limpar>Ver todas as peças</button></li>`;
+  revelar($("#vitrine"));
+}
+function desenharFiltros() {
+  const usados = { tipo: TIPOS.filter(([id]) => PECAS.some(p => p.tipo === id)), linha: LINHAS.filter(([id]) => PECAS.some(p => p.grupos.includes(id))) };
+  document.querySelectorAll("#filtros .filtro-op").forEach(op => {
+    const g = op.dataset.grupo;
+    op.innerHTML = [["todas", "Todas"], ...usados[g]].map(([id, nome]) => `<button type="button" data-valor="${id}" aria-pressed="${filtro[g] === id}">${nome}</button>`).join("");
+  });
 }
 $("#filtros").addEventListener("click", e => {
-  const b = e.target.closest("button[data-filtro]");
+  const b = e.target.closest("button[data-valor]");
   if (!b) return;
-  filtro = b.dataset.filtro;
-  document.querySelectorAll("#filtros button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  const g = b.closest(".filtro-op").dataset.grupo;
+  filtro[g] = b.dataset.valor;
+  desenharFiltros();
   desenharVitrine();
+  $(`#filtros .filtro-op[data-grupo="${g}"] [aria-pressed="true"]`).focus();
 });
 $("#vitrine").addEventListener("click", e => {
+  if (e.target.closest("[data-limpar]")) { filtro.tipo = filtro.linha = "todas"; desenharFiltros(); desenharVitrine(); return; }
   const b = e.target.closest("[data-peca]");
   if (b) abrirFicha(b.dataset.peca, b);
 });
@@ -1295,8 +1351,27 @@ const obs = new IntersectionObserver(ents => {
 });
 obs.observe($(".abertura")); obs.observe($(".rodape"));
 
+/* fotos aparecem aos poucos quando entram na tela */
+function mostrarAoCarregar(el, atraso = 0) {
+  const img = el.tagName === "IMG" ? el : el.querySelector("img");
+  const mostrar = () => { if (atraso) el.style.transitionDelay = atraso + "ms"; el.classList.add("visivel"); };
+  if (!img || img.complete) mostrar(); else { img.addEventListener("load", mostrar, { once: true }); img.addEventListener("error", mostrar, { once: true }); }
+}
+const revela = "IntersectionObserver" in window ? new IntersectionObserver(ents => {
+  // as peças que entram juntas na tela se ajeitam uma depois da outra
+  ents.filter(en => en.isIntersecting).forEach((en, i) => { revela.unobserve(en.target); mostrarAoCarregar(en.target, i * 110); });
+}, { rootMargin: "0px 0px -6% 0px" }) : null;
+function revelar(raiz = document) {
+  raiz.querySelectorAll(".revelar:not(.visivel)").forEach(img => {
+    // a abertura aparece assim que a foto carrega; o resto, quando entra na tela
+    if (!revela || img.closest(".abertura")) mostrarAoCarregar(img); else revela.observe(img);
+  });
+}
+
+desenharFiltros();
 desenharVitrine();
 contar();
+revelar();
 </script>
 </body>
 </html>
