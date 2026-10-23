@@ -193,7 +193,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .erro { color: #A2322E; font-size: .95rem; }
 
 /* sacola */
-.sacola { margin: 0 0 0 auto; width: min(100%, 460px); height: 100dvh; max-height: 100dvh; border-radius: 20px 0 0 20px; }
+.sacola { margin: 0 0 0 auto; width: min(100%, 460px); max-width: 100%; height: 100dvh; max-height: 100dvh; border-radius: 20px 0 0 20px; }
 .sacola[open] { display: flex; flex-direction: column; }
 .sacola-topo { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 1.4rem; border-bottom: 1px solid var(--linha); }
 .sacola-topo h2 { font-size: 1.6rem; }
@@ -285,6 +285,95 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .zap-canto svg { width: 30px; height: 30px; }
 .zap-canto[data-oculto] { opacity: 0; transform: translateY(12px); pointer-events: none; }
 
+/* finalizar compra */
+.checkout { width: min(100% - 2rem, 1080px); height: calc(100dvh - 2rem); max-height: calc(100dvh - 2rem); max-width: 100%; border-radius: 20px; overflow: hidden; }
+.checkout[open] { display: flex; flex-direction: column; }
+.ck-topo { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1.5rem; padding: .9rem 1.4rem; border-bottom: 1px solid var(--linha); }
+.ck-topo h2 { font-size: 1.5rem; margin-right: auto; }
+.ck-topo .fechar { position: static; background: var(--nevoa); flex: none; }
+.etapas { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .5rem; min-width: 0; }
+.etapas li { display: flex; align-items: center; gap: .45rem; color: var(--suave); font-size: .95rem; }
+.etapas li + li::before { content: ""; width: clamp(8px, 3vw, 24px); height: 1px; background: #CDBEB4; margin-right: .1rem; }
+.etapas b { width: 1.75rem; height: 1.75rem; border-radius: 50%; border: 1px solid #CDBEB4; display: inline-grid; place-items: center; font-weight: 500; font-size: .85rem; flex: none; }
+.etapas li[aria-current] { color: var(--texto); font-weight: 500; }
+.etapas li[aria-current] b { background: var(--cacau); border-color: var(--cacau); color: #fff; }
+.etapas li.feita b { background: var(--rose); border-color: var(--rose); color: var(--cacau); }
+.ck-corpo { flex: 1; overflow: auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px); }
+.ck-form { padding: 1.6rem 2rem 2.4rem; display: grid; gap: 1.1rem; align-content: start; min-width: 0; overflow-wrap: anywhere; grid-template-columns: minmax(0, 1fr); }
+.ck-form h3 { font-size: 1.45rem; }
+.ck-form h3:not(:first-child) { margin-top: .8rem; }
+.ck-form h3:focus { outline: none; }
+.ck-bloco { display: grid; gap: 1.1rem; }
+.ck-duas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.1rem .9rem; }
+.ck-cidade { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: .9rem; }
+.ck-cep { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: .3rem 1rem; align-items: end; }
+.ck-cep .entrega-info { padding-bottom: .8rem; }
+.campo-erro { color: #A2322E; font-size: .9rem; }
+.campo input[aria-invalid="true"] { border-color: #A2322E; }
+.campo input[readonly] { background: var(--nevoa); color: var(--suave); }
+.opcoes { display: grid; gap: .6rem; }
+.opcao { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: .9rem; padding: .85rem 1rem; border: 1px solid #CDBEB4; border-radius: 14px; cursor: pointer; transition: border-color .2s, background-color .2s; }
+.opcao:hover { border-color: var(--bronze); }
+.opcao input { width: 20px; height: 20px; margin: 0; accent-color: var(--cacau); flex: none; }
+.opcao:has(input:checked) { border-color: var(--cacau); background: var(--nevoa); box-shadow: inset 0 0 0 1px var(--cacau); }
+.opcao-txt { display: grid; min-width: 0; flex: 1 1 7rem; }
+.opcao-txt strong { font-weight: 500; }
+.opcao-txt small { color: var(--suave); font-size: .9rem; }
+.opcao-lado { font-weight: 500; white-space: nowrap; }
+.opcao-lado svg { width: 28px; height: 28px; color: var(--bronze); display: block; }
+.aviso-teste { background: var(--rose); color: var(--cacau); border-radius: 12px; padding: .7rem 1rem; font-size: .92rem; }
+.ck-entrega { display: flex; justify-content: space-between; align-items: start; gap: 1rem; padding: 1rem 1.1rem; border: 1px solid var(--linha); border-radius: 14px; }
+.ck-entrega strong { font-weight: 500; }
+.ck-entrega p { color: var(--suave); font-size: .95rem; overflow-wrap: anywhere; }
+.link { border: 0; background: none; color: var(--bronze); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 44px; padding: 0 .3rem; flex: none; }
+.ck-acoes { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .7rem; margin-top: .6rem; }
+.ck-acoes .btn-escuro { flex: 1 1 16rem; max-width: 22rem; margin-left: auto; }
+.ck-acoes .btn[disabled] { opacity: .75; cursor: progress; }
+.cartao { display: grid; gap: 1rem; }
+.cartao-face { position: relative; width: min(100%, 320px); aspect-ratio: 1.586; border-radius: 16px; background: var(--cacau); color: #F3E9E3; padding: 1.1rem 1.3rem; display: grid; grid-template-columns: 1fr auto; grid-template-rows: 1fr auto auto; gap: .3rem; overflow: hidden; }
+.cartao-face::after { content: ""; position: absolute; right: -30px; top: -30px; width: 140px; height: 140px; border-radius: 50%; border: 1px solid rgba(245,198,210,.35); }
+.chip { width: 42px; height: 32px; border-radius: 6px; background: #C9A595; grid-column: 1 / -1; }
+.cartao-num { grid-column: 1 / -1; font-size: 1.15rem; letter-spacing: .08em; }
+.cartao-nome, .cartao-val { font-size: .9rem; color: #E9DCD4; }
+.pix { display: grid; grid-template-columns: minmax(0, 1fr); justify-items: center; gap: 1rem; text-align: center; }
+.qr { width: min(210px, 100%); height: auto; aspect-ratio: 1; border: 1px solid var(--linha); border-radius: 12px; padding: .4rem; background: #fff; }
+.pix-valor { font-family: var(--titulo); font-size: 2rem; }
+.pix-passos { text-align: left; margin: 0; padding-left: 1.3rem; color: var(--suave); display: grid; gap: .3rem; max-width: 28rem; }
+.pix-codigo { display: flex; gap: .6rem; width: 100%; max-width: 30rem; }
+.pix-codigo input { flex: 1; width: 0; min-width: 0; min-height: 50px; padding: .5rem .9rem; border: 1px solid #CDBEB4; border-radius: 12px; background: var(--nevoa); color: var(--suave); }
+.pix-codigo .btn { flex: none; }
+.aguardando { display: grid; justify-items: center; gap: .6rem; color: var(--suave); width: min(100%, 260px); }
+.aguardando .barra { position: relative; width: 100%; height: 4px; border-radius: 4px; background: var(--rose); overflow: hidden; }
+.aguardando .barra::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 40%; border-radius: 4px; background: var(--bronze); animation: carrega 1.4s ease-in-out infinite; }
+@keyframes carrega { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.confirmado { display: grid; justify-items: center; text-align: center; gap: 1rem; }
+.confirmado .ok { width: 72px; height: 72px; }
+.confirmado h3 { font-size: 2rem; }
+.linha-tempo { list-style: none; margin: .4rem 0; padding: 0; text-align: left; width: min(100%, 30rem); display: grid; }
+.linha-tempo li { position: relative; padding: 0 0 1.1rem 2.2rem; display: grid; }
+.linha-tempo li::before { content: ""; position: absolute; left: 0; top: .2rem; width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2px solid #CDBEB4; background: #fff; }
+.linha-tempo li:not(:last-child)::after { content: ""; position: absolute; left: calc(.55rem - 1px); top: 1.5rem; bottom: .1rem; width: 2px; background: var(--linha); }
+.linha-tempo li.feita::before { background: var(--bronze); border-color: var(--bronze); }
+.linha-tempo li.agora::before { border-color: var(--bronze); box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 9px var(--flor); }
+.linha-tempo strong { font-weight: 500; }
+.linha-tempo small { color: var(--suave); overflow-wrap: anywhere; }
+.ck-resumo { background: var(--nevoa); border-left: 1px solid var(--linha); padding: 1.6rem 1.5rem; display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.2rem; align-content: start; min-width: 0; }
+.ck-resumo summary { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .2rem 1rem; list-style: none; font-family: var(--titulo); font-size: 1.3rem; }
+.ck-resumo summary::-webkit-details-marker { display: none; }
+.ck-resumo summary strong { font-family: var(--corpo); font-weight: 500; font-size: 1.05rem; }
+.mini-itens { list-style: none; margin: 1.1rem 0; padding: 0; display: grid; gap: .9rem; }
+.mini-itens li { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: .8rem; align-items: center; }
+.mini-itens img { width: 52px; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 8px; }
+.mini-itens p { font-size: .95rem; font-weight: 500; }
+.mini-itens small { color: var(--suave); font-size: .85rem; }
+.mini-itens span { font-size: .95rem; white-space: nowrap; }
+.selo-seguro { display: flex; gap: .6rem; align-items: start; font-size: .88rem; color: var(--suave); }
+.selo-seguro svg { width: 20px; height: 20px; flex: none; color: var(--bronze); margin-top: .1rem; }
+@media (min-width: 761px) {
+  .ck-resumo summary { pointer-events: none; }
+  .ck-resumo summary strong { display: none; }
+}
+
 @media (max-width: 1200px) {
   .sacola-botao .rotulo { display: none; }
   .menu a { padding: .6rem .6rem; }
@@ -340,7 +429,35 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .rodape-grade { grid-template-columns: minmax(0, 1fr); }
   .loja-fotos img:nth-child(2) { margin-top: 2rem; }
 }
+@media (max-width: 760px) {
+  .checkout { width: 100%; height: 100dvh; max-height: 100dvh; margin: 0; border-radius: 0; }
+  .ck-topo { flex-wrap: wrap; padding: .7rem 1.25rem; }
+  .ck-topo h2 { font-size: 1.3rem; }
+  .etapas { order: 3; width: 100%; }
+  .ck-corpo { grid-template-columns: minmax(0, 1fr); align-content: start; }
+  .ck-resumo { order: -1; border-left: 0; border-bottom: 1px solid var(--linha); padding: 1rem 1.25rem; }
+  .ck-resumo summary { cursor: pointer; font-size: 1.1rem; align-items: center; }
+  .ck-resumo summary span::after { content: ""; display: inline-block; width: 8px; height: 8px; margin-left: .6rem; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-3px) rotate(45deg); transition: transform .2s; }
+  .ck-resumo details[open] summary span::after { transform: translateY(0) rotate(-135deg); }
+  .selo-seguro { display: none; }
+  .ck-form { padding: 1.3rem 1.25rem 2rem; }
+  .ck-duas, .ck-cep { grid-template-columns: minmax(0, 1fr); }
+  .ck-cep .entrega-info { padding-bottom: 0; }
+  .ck-acoes { flex-direction: column-reverse; }
+  .ck-acoes .btn { width: 100%; max-width: none; }
+  .pix-codigo { flex-direction: column; }
+}
+@media (max-width: 480px) {
+  .etapas li:not([aria-current]) span { display: none; }
+  .etapas { gap: .4rem; }
+  .ck-cidade { grid-template-columns: minmax(0, 1fr) 76px; }
+}
 @media (max-width: 360px) {
+  .mini-itens li { grid-template-columns: 44px minmax(0, 1fr); }
+  .mini-itens img { width: 44px; }
+  .mini-itens li > span { grid-column: 2; }
+  .ck-topo, .ck-form, .ck-resumo { padding-left: 1rem; padding-right: 1rem; }
+  .opcao { padding: .75rem .8rem; gap: .7rem; }
   .marca b { letter-spacing: .2em; margin-right: -.2em; }
   #menu-botao { width: 46px; }
   #menu-botao span { left: 11px; }
@@ -380,6 +497,9 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     <symbol id="i-estrela" viewBox="0 0 24 24"><path fill="currentColor" d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7L12 3Z"/></symbol>
     <symbol id="i-caixa" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5v-9Zm0 0L12 12m0 0 8.5-4.5M12 12v9M7.8 5.2l8.5 4.6"/></symbol>
     <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M8.5 10.5V7.5a3.5 3.5 0 0 1 7 0v3"/></symbol>
+    <symbol id="i-pix" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M12 2.8 21.2 12 12 21.2 2.8 12 12 2.8Z"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="m7.4 12 2.3-2.3c1.3-1.3 3.3-1.3 4.6 0L16.6 12l-2.3 2.3c-1.3 1.3-3.3 1.3-4.6 0L7.4 12Z"/></symbol>
+    <symbol id="i-cartao" viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path stroke="currentColor" stroke-width="1.6" d="M3 9.5h18M6.5 15h4"/></symbol>
     <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></symbol>
   </defs>
 </svg>
@@ -426,7 +546,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
       <div class="envelope">
         <div>
           <h1 id="titulo-abertura"><span>Moda feminina</span> <span>do P ao GG</span> <span>e do 44 ao 50</span></h1>
-          <p>Peças escolhidas uma a uma para a nossa loja em Cravinhos. Escolha aqui, envie o pedido pelo WhatsApp e receba em qualquer lugar do Brasil.</p>
+          <p>Peças escolhidas uma a uma para a nossa loja em Cravinhos. Escolha aqui, pague pelo Pix ou cartão e receba em qualquer lugar do Brasil.</p>
           <div class="botoes">
             <a class="btn btn-claro" href="#colecao">Ver a coleção</a>
             <a class="btn btn-vidro" href="https://wa.me/5516974064343?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SISS%20Store." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Falar no WhatsApp</a>
@@ -449,7 +569,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
       <div class="cabeca">
         <div>
           <h2 id="titulo-colecao">Coleção</h2>
-          <p>Toque na peça para escolher a cor e o tamanho. Confirmamos a disponibilidade pelo WhatsApp antes do pagamento.</p>
+          <p>Toque na peça para escolher a cor e o tamanho.</p>
         </div>
         <div class="filtros" role="group" aria-label="Filtrar peças" id="filtros">
           <button type="button" data-filtro="todas" aria-pressed="true">Todas</button>
@@ -531,12 +651,12 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
         <use href="#flor" x="102" y="18" width="24" height="24"/>
         <use href="#flor" x="150" y="2" width="26" height="26"/>
       </svg>
-      <div class="cabeca"><div><h2 id="titulo-como">Como comprar</h2><p>Atendemos clientes de todo o Brasil pelo WhatsApp.</p></div></div>
+      <div class="cabeca"><div><h2 id="titulo-como">Como comprar</h2><p>Compra pelo site, com entrega para todo o Brasil ou retirada na loja.</p></div></div>
       <ol class="passos">
         <li><h3>Escolha as peças</h3><p>Selecione a cor e o tamanho na coleção e adicione à sacola.</p></li>
-        <li><h3>Envie o pedido</h3><p>Informe o CEP e envie a sacola pelo WhatsApp, com tudo já preenchido.</p></li>
-        <li><h3>Confirmação</h3><p>Confirmamos a disponibilidade, o valor do frete e a forma de pagamento.</p></li>
-        <li><h3>Envio ou retirada</h3><p>Enviamos para o seu endereço ou separamos a peça para retirar na loja.</p></li>
+        <li><h3>Informe a entrega</h3><p>Digite o CEP e escolha entre PAC, SEDEX ou retirada na loja, em Cravinhos.</p></li>
+        <li><h3>Pague pelo site</h3><p>Pix com aprovação na hora ou cartão de crédito em até 3 vezes sem juros.</p></li>
+        <li><h3>Acompanhe o pedido</h3><p>Você recebe as atualizações no e-mail até a peça chegar ou ficar pronta para retirada.</p></li>
       </ol>
     </div>
   </section>
@@ -585,6 +705,22 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   </div>
   <div class="sacola-corpo" id="sacola-corpo"></div>
   <div class="sacola-pe" id="sacola-pe"></div>
+</dialog>
+
+<dialog class="checkout" id="checkout" aria-labelledby="ck-cabeca">
+  <div class="ck-topo">
+    <h2 id="ck-cabeca">Finalizar compra</h2>
+    <ol class="etapas" id="ck-etapas">
+      <li data-e="1"><b>1</b><span>Entrega</span></li>
+      <li data-e="2"><b>2</b><span>Pagamento</span></li>
+      <li data-e="3"><b>3</b><span>Confirmação</span></li>
+    </ol>
+    <button class="fechar" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+  </div>
+  <div class="ck-corpo" id="ck-corpo">
+    <form class="ck-form" id="ck-form" novalidate></form>
+    <aside class="ck-resumo" id="ck-resumo" aria-label="Resumo do pedido"></aside>
+  </div>
 </dialog>
 
 <script>
@@ -707,7 +843,7 @@ $("#ficha-form").addEventListener("submit", e => {
 
 /* sacola */
 let itens = ler("siss-sacola", []).filter(i => PECAS.some(p => p.id === i.id));
-let cep = ler("siss-cep", ""), nome = ler("siss-nome", ""), retirar = false, cidade = null;
+try { localStorage.removeItem("siss-cep"); localStorage.removeItem("siss-nome"); } catch {}
 function salvar() { gravar("siss-sacola", itens); contar(); }
 function contar() {
   const n = itens.reduce((s, i) => s + i.qtd, 0);
@@ -721,11 +857,14 @@ function adicionar(id, cor, tam) {
   if (achado) achado.qtd++; else itens.push({ id, cor: +cor, tam, qtd: 1 });
   salvar();
 }
+const pecaDe = i => PECAS.find(x => x.id === i.id);
+const corDe = i => { const p = pecaDe(i); return p.cores[i.cor] || p.cores[0]; };
 const sacola = $("#sacola");
 function abrirSacola() { desenharSacola(); sacola.showModal(); }
 $("#abrir-sacola").addEventListener("click", abrirSacola);
 sacola.addEventListener("click", e => {
   if (e.target === sacola || e.target.closest("[data-fechar]")) { sacola.close(); return; }
+  if (e.target.closest("#ir-checkout")) { sacola.close(); abrirCheckout(); return; }
   const b = e.target.closest("button[data-acao]");
   if (!b) return;
   const i = itens[+b.dataset.i];
@@ -736,11 +875,12 @@ sacola.addEventListener("click", e => {
   desenharSacola(b.dataset.acao === "remover" ? null : `button[data-acao="${b.dataset.acao}"][data-i="${b.dataset.i}"]`);
 });
 const ramoVazio = `<svg viewBox="0 0 120 70" aria-hidden="true" class="galho"><path class="ramo" stroke-width="2.5" d="M6 52c30-6 56-22 108-18"/><use href="#flor" x="22" y="26" width="26" height="26"/><use href="#flor" x="62" y="16" width="22" height="22"/><use href="#flor" x="88" y="30" width="24" height="24"/></svg>`;
-function totais() {
+function totais(lista = itens) {
   let soma = 0, consultar = 0;
-  itens.forEach(i => { const p = PECAS.find(x => x.id === i.id); if (p.preco) soma += p.preco * i.qtd; else consultar += i.qtd; });
+  lista.forEach(i => { const p = pecaDe(i); if (p.preco) soma += p.preco * i.qtd; else consultar += i.qtd; });
   return { soma, consultar };
 }
+const pecas = n => n > 1 ? `${n} peças` : "1 peça";
 function desenharSacola(focar) {
   const corpo = $("#sacola-corpo"), pe = $("#sacola-pe");
   if (!itens.length) {
@@ -751,7 +891,7 @@ function desenharSacola(focar) {
   const { soma, consultar } = totais();
   corpo.innerHTML = `
     <ul class="itens">${itens.map((i, k) => {
-      const p = PECAS.find(x => x.id === i.id), c = p.cores[i.cor] || p.cores[0];
+      const p = pecaDe(i), c = corDe(i);
       return `<li class="item">
         <img src="${foto(c.foto)}" width="72" height="96" alt="">
         <div><h3>${esc(p.nome)}</h3><p>${esc(c.nome)}, tamanho ${esc(i.tam)}</p>
@@ -759,66 +899,331 @@ function desenharSacola(focar) {
         </div>
         <div style="text-align:right"><p class="${p.preco ? "" : "consultar"}">${p.preco ? real(p.preco * i.qtd) : "Consultar"}</p><button class="remover" type="button" data-acao="remover" data-i="${k}">Remover</button></div>
       </li>`; }).join("")}</ul>
-    <label class="campo"><span>CEP para entrega</span><input id="cep" inputmode="numeric" autocomplete="postal-code" maxlength="9" value="${esc(cep)}" placeholder="00000-000"></label>
-    <p class="entrega-info" id="entrega-info" aria-live="polite"></p>
-    <div id="retirada"></div>
-    <label class="campo"><span>Seu nome</span><input id="nome" autocomplete="name" value="${esc(nome)}"></label>
     <div class="resumo">
       <div class="total"><span>Subtotal</span><span>${real(soma)}</span></div>
-      ${consultar ? `<small>Mais ${consultar} ${consultar > 1 ? "peças" : "peça"} com valor a consultar.</small>` : ""}
-      <small>Frete e forma de pagamento são confirmados pelo WhatsApp.</small>
-    </div>
-    <div><p class="balao-rotulo">Mensagem que será enviada:</p><p class="balao" id="balao-sacola"></p></div>`;
-  pe.innerHTML = `<a class="btn btn-zap" id="enviar-pedido" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Enviar pedido pelo WhatsApp</a>`;
-  $("#cep").addEventListener("input", aoDigitarCep);
-  $("#nome").addEventListener("input", e => { nome = e.target.value; gravar("siss-nome", nome); montarPedido(); });
-  if (cep.replace(/\D/g, "").length === 8) buscarCep(); else montarPedido();
+      ${consultar ? `<small>Mais ${pecas(consultar)} com valor a consultar: a nossa equipe confirma o valor depois da compra.</small>` : ""}
+      <small>O frete é calculado na próxima etapa, pelo CEP.</small>
+    </div>`;
+  if (soma) {
+    pe.innerHTML = `<button class="btn btn-escuro" type="button" id="ir-checkout"><svg aria-hidden="true"><use href="#i-cadeado"/></svg>Finalizar compra</button>
+      <button class="btn btn-linha" type="button" data-fechar>Continuar comprando</button>`;
+  } else {
+    const texto = ["Olá! Gostaria de saber o valor destas peças:", ...itens.map(i => `- ${pecaDe(i).nome}, cor ${corDe(i).nome}, tamanho ${i.tam}, ${i.qtd} ${i.qtd > 1 ? "unidades" : "unidade"}`)].join("\n");
+    pe.innerHTML = `<p class="entrega-info">As peças da sacola têm valor a consultar. Fale com a nossa equipe para receber o valor.</p>
+      <a class="btn btn-zap" href="${zap(texto)}" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Consultar valores</a>`;
+  }
   if (focar) sacola.querySelector(focar)?.focus();
 }
-function aoDigitarCep(e) {
-  let v = e.target.value.replace(/\D/g, "").slice(0, 8);
-  e.target.value = v.length > 5 ? v.slice(0, 5) + "-" + v.slice(5) : v;
-  cep = e.target.value; gravar("siss-cep", cep);
-  cidade = null; retirar = false;
-  if (v.length === 8) buscarCep(); else { $("#entrega-info").textContent = ""; $("#retirada").innerHTML = ""; montarPedido(); }
+
+/* finalizar compra: pagamento simulado, nada sai do navegador */
+const checkout = $("#checkout"), ckForm = $("#ck-form"), ckResumo = $("#ck-resumo");
+const ck = {};
+let fretes = [], timer = null, pedido = null;
+function zerarCk() {
+  Object.assign(ck, { etapa: 1, email: "", cel: "", nome: "", cep: "", rua: "", numero: "", compl: "", bairro: "", cidade: "", uf: "", frete: null, pag: "pix", parcelas: 1, num: 0, cepAchado: false });
+  fretes = []; pedido = null;
 }
-async function buscarCep() {
-  const v = cep.replace(/\D/g, ""), info = $("#entrega-info");
+zerarCk();
+const desktop = matchMedia("(min-width: 761px)");
+function calcFretes() {
+  const sp = ck.uf.toUpperCase() === "SP", lista = [];
+  if (sp && ck.cidade.trim().toLowerCase() === "cravinhos") lista.push({ id: "retirar", nome: "Retirar na loja", prazo: "Pronto em até 1 dia útil, na Rua XV de Novembro, 129", valor: 0 });
+  lista.push({ id: "pac", nome: "Correios PAC", prazo: sp ? "4 a 7 dias úteis" : "6 a 12 dias úteis", valor: sp ? 16.9 : 26.9 });
+  lista.push({ id: "sedex", nome: "Correios SEDEX", prazo: sp ? "1 a 3 dias úteis" : "3 a 6 dias úteis", valor: sp ? 24.9 : 44.9 });
+  fretes = lista;
+  if (!fretes.some(f => f.id === ck.frete)) ck.frete = null;
+}
+const freteAtual = () => fretes.find(f => f.id === ck.frete) || null;
+function contas() {
+  if (pedido) return pedido.contas;
+  const { soma, consultar } = totais(), f = freteAtual();
+  return { soma, consultar, frete: f ? f.valor : null, total: soma + (f ? f.valor : 0) };
+}
+
+function abrirCheckout() {
+  if (!totais().soma) return abrirSacola();
+  ck.etapa = 1;
+  desenharCk();
+  checkout.showModal();
+}
+function fecharCk() {
+  clearTimeout(timer);
+  checkout.close();
+  if (ck.etapa === 3) zerarCk();
+  else if (ck.etapa === "pix") ck.etapa = 2;
+}
+
+function campo(k, rotulo, attrs = "") {
+  return `<label class="campo"><span>${rotulo}</span><input data-k="${k}" id="ck-${k}" value="${esc(ck[k])}" ${attrs} aria-describedby="er-${k}"><small class="campo-erro" id="er-${k}" hidden></small></label>`;
+}
+function opcao(nome, valor, marcado, titulo, detalhe, lado = "") {
+  return `<label class="opcao"><input type="radio" name="${nome}" value="${valor}" ${marcado ? "checked" : ""}><span class="opcao-txt"><strong>${titulo}</strong><small>${detalhe}</small></span>${lado ? `<span class="opcao-lado">${lado}</span>` : ""}</label>`;
+}
+function desenharFretes() {
+  $("#ck-fretes").hidden = !fretes.length;
+  $("#ck-fretes-op").innerHTML = fretes.map(f => opcao("frete", f.id, ck.frete === f.id, f.nome, f.prazo, f.valor ? real(f.valor) : "Grátis")).join("");
+  $("#ck-endereco").hidden = !fretes.length || ck.frete === "retirar";
+}
+function enderecoTexto() {
+  if (ck.frete === "retirar") return "Rua XV de Novembro, 129, Centro, Cravinhos/SP";
+  return `${ck.rua}, ${ck.numero}${ck.compl.trim() ? ", " + ck.compl.trim() : ""}, ${ck.bairro}, ${ck.cidade}/${ck.uf.toUpperCase()}, CEP ${ck.cep}`;
+}
+function qrSvg(semente) {
+  const n = 25; let s = semente;
+  const sorte = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  const canto = (x, y) => (x < 8 && y < 8) || (x > n - 9 && y < 8) || (x < 8 && y > n - 9);
+  const caixa = (x, y) => `<rect x="${x}" y="${y}" width="7" height="7"/><rect x="${x + 1}" y="${y + 1}" width="5" height="5" fill="#fff"/><rect x="${x + 2}" y="${y + 2}" width="3" height="3"/>`;
+  let r = "";
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (!canto(x, y) && sorte() < .5) r += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  return `<svg class="qr" viewBox="-2 -2 ${n + 4} ${n + 4}" role="img" aria-label="QR Code do Pix de teste" shape-rendering="crispEdges"><rect x="-2" y="-2" width="${n + 4}" height="${n + 4}" fill="#fff"/><g fill="#2E2522">${r}${caixa(0, 0)}${caixa(n - 7, 0)}${caixa(0, n - 7)}</g></svg>`;
+}
+
+function etapa1() {
+  return `<h3 id="ck-titulo" tabindex="-1">Contato</h3>
+    <div class="ck-duas">
+      ${campo("email", "E-mail", 'type="email" inputmode="email" autocomplete="email"')}
+      ${campo("cel", "Celular com DDD", 'type="tel" inputmode="tel" autocomplete="tel-national" maxlength="15" placeholder="(16) 99999-9999"')}
+    </div>
+    ${campo("nome", "Nome completo", 'autocomplete="name"')}
+    <h3>Entrega</h3>
+    <div class="ck-cep">
+      ${campo("cep", "CEP", 'inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000"')}
+      <p class="entrega-info" id="ck-cep-info" aria-live="polite"></p>
+    </div>
+    <fieldset id="ck-fretes" hidden><legend>Forma de entrega</legend><div class="opcoes" id="ck-fretes-op"></div><small class="campo-erro" id="er-frete" hidden></small></fieldset>
+    <div class="ck-bloco" id="ck-endereco" hidden>
+      ${campo("rua", "Rua", 'autocomplete="address-line1"')}
+      <div class="ck-duas">
+        ${campo("numero", "Número", 'autocomplete="off"')}
+        ${campo("compl", "Complemento <small>(opcional)</small>", 'autocomplete="address-line2"')}
+      </div>
+      ${campo("bairro", "Bairro", 'autocomplete="address-level3"')}
+      <div class="ck-cidade">
+        ${campo("cidade", "Cidade", 'autocomplete="address-level2"')}
+        ${campo("uf", "UF", 'maxlength="2" autocomplete="address-level1"')}
+      </div>
+    </div>
+    <div class="ck-acoes">
+      <button class="btn btn-linha" type="button" data-ck="sacola">Voltar à sacola</button>
+      <button class="btn btn-escuro" type="submit">Continuar para o pagamento</button>
+    </div>`;
+}
+function etapa2() {
+  const f = freteAtual(), { total } = contas();
+  const cartao = ck.pag === "cartao";
+  return `<h3 id="ck-titulo" tabindex="-1">Pagamento</h3>
+    <p class="aviso-teste">Ambiente de teste: o pagamento é simulado e nenhum valor é cobrado.</p>
+    <div class="ck-entrega">
+      <div><strong>${ck.frete === "retirar" ? "Retirada na loja" : "Entrega"}</strong><p>${esc(enderecoTexto())}</p><p>${esc(f.nome)}, ${esc(f.prazo.replace(/, na Rua.*/, ""))}</p></div>
+      <button class="link" type="button" data-ck="etapa1">Alterar</button>
+    </div>
+    <fieldset><legend>Forma de pagamento</legend><div class="opcoes">
+      ${opcao("pag", "pix", !cartao, "Pix", "Aprovação na hora", '<svg aria-hidden="true"><use href="#i-pix"/></svg>')}
+      ${opcao("pag", "cartao", cartao, "Cartão de crédito", "Em até 3 vezes sem juros", '<svg aria-hidden="true"><use href="#i-cartao"/></svg>')}
+    </div></fieldset>
+    ${cartao ? `<div class="cartao">
+      <div class="cartao-face" aria-hidden="true"><span class="chip"></span><span class="cartao-num">•••• •••• •••• 1111</span><span class="cartao-nome">Cliente Teste</span><span class="cartao-val">12/30</span></div>
+      <p class="entrega-info">Cartão de teste, já preenchido. Nenhum dado de cartão é pedido.</p>
+      <div class="ck-duas">
+        <label class="campo"><span>Número do cartão</span><input value="4111 1111 1111 1111" readonly autocomplete="off"></label>
+        <label class="campo"><span>Nome impresso no cartão</span><input value="Cliente Teste" readonly autocomplete="off"></label>
+        <label class="campo"><span>Validade</span><input value="12/30" readonly autocomplete="off"></label>
+        <label class="campo"><span>Código de segurança</span><input value="123" readonly autocomplete="off"></label>
+      </div>
+      <label class="campo"><span>Parcelas</span><select id="ck-parcelas">${[1, 2, 3].map(n => `<option value="${n}" ${ck.parcelas === n ? "selected" : ""}>${n}x de ${real(total / n)} sem juros</option>`).join("")}</select></label>
+    </div>` : `<p class="entrega-info">O QR Code e o código Pix Copia e Cola aparecem na próxima tela.</p>`}
+    <div class="ck-acoes">
+      <button class="btn btn-linha" type="button" data-ck="etapa1">Voltar</button>
+      <button class="btn btn-escuro" type="submit" id="ck-pagar"><svg aria-hidden="true"><use href="#i-cadeado"/></svg>${cartao ? `Pagar ${real(total)}` : `Gerar Pix de ${real(total)}`}</button>
+    </div>`;
+}
+function etapaPix() {
+  const { total } = contas();
+  return `<h3 id="ck-titulo" tabindex="-1">Pague com Pix</h3>
+    <p class="aviso-teste">Ambiente de teste: este código Pix é simulado e não pode ser pago.</p>
+    <div class="pix">
+      ${qrSvg(ck.num)}
+      <p class="pix-valor">${real(total)}</p>
+      <ol class="pix-passos">
+        <li>Abra o aplicativo do seu banco e escolha pagar com Pix.</li>
+        <li>Escaneie o QR Code ou use o código Pix Copia e Cola.</li>
+        <li>A confirmação aparece nesta tela assim que o pagamento é feito.</li>
+      </ol>
+      <div class="pix-codigo"><input id="ck-codigo" readonly value="SISS-STORE-PEDIDO-${ck.num}-TESTE" aria-label="Código Pix Copia e Cola"><button class="btn btn-linha" type="button" data-ck="copiar">Copiar código</button></div>
+      <p class="aguardando" role="status"><span class="barra" aria-hidden="true"></span>Aguardando o pagamento</p>
+    </div>
+    <div class="ck-acoes"><button class="btn btn-linha" type="button" data-ck="etapa2">Escolher outra forma de pagamento</button></div>`;
+}
+function etapa3() {
+  const p = pedido, retirada = p.frete.id === "retirar";
+  return `<div class="confirmado">
+      <svg class="ok" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#EFE4DC"/><path d="m20 33 8 8 16-17" fill="none" stroke="#7A5442" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3 id="ck-titulo" tabindex="-1">Pedido confirmado</h3>
+      <p>Pedido nº ${p.num}. Agradecemos a sua compra, ${esc(p.nome.trim().split(/\s+/)[0])}.</p>
+      <p class="aviso-teste">Pedido de teste: nenhum valor foi cobrado.</p>
+      <ol class="linha-tempo">
+        <li class="feita"><strong>Pagamento aprovado</strong><small>${p.pag === "pix" ? "Pix" : `Cartão de crédito em ${p.parcelas}x`}</small></li>
+        <li class="agora"><strong>Separando as peças</strong><small>A nossa equipe confere cada peça antes de embalar</small></li>
+        <li><strong>${retirada ? "Pronto para retirar" : "Enviado"}</strong><small>${retirada ? "Avisamos pelo celular quando estiver separado" : `${esc(p.frete.nome)}, com código de rastreio`}</small></li>
+        <li><strong>${retirada ? "Retirado na loja" : "Entregue"}</strong><small>${esc(p.endereco)}</small></li>
+      </ol>
+      <p class="entrega-info">As atualizações do pedido chegam no e-mail ${esc(p.email)}.</p>
+      ${p.contas.consultar ? `<p class="entrega-info">Entramos em contato pelo celular ${esc(p.cel)} para confirmar o valor de ${pecas(p.contas.consultar)} com valor a consultar.</p>` : ""}
+      <button class="btn btn-escuro" type="button" data-ck="fim">Voltar à loja</button>
+    </div>`;
+}
+function desenharResumo() {
+  const lista = pedido ? pedido.itens : itens, c = contas();
+  const parcelas = (pedido ? pedido.pag : ck.pag) === "cartao" ? (pedido ? pedido.parcelas : ck.parcelas) : 1;
+  const aberto = desktop.matches || ckResumo.querySelector("details")?.open;
+  ckResumo.innerHTML = `<details ${aberto ? "open" : ""}><summary><span>Resumo do pedido</span><strong>${real(c.total)}</strong></summary>
+    <ul class="mini-itens">${lista.map(i => {
+      const p = pecaDe(i), cor = corDe(i);
+      return `<li><img src="${foto(cor.foto)}" width="52" height="69" alt=""><div><p>${esc(p.nome)}</p><small>${esc(cor.nome)}, ${esc(i.tam)}, ${i.qtd} ${i.qtd > 1 ? "unidades" : "unidade"}</small></div><span>${p.preco ? real(p.preco * i.qtd) : "A consultar"}</span></li>`; }).join("")}</ul>
+    <div class="resumo">
+      <div><span>Subtotal</span><span>${real(c.soma)}</span></div>
+      <div><span>Frete</span><span>${c.frete === null ? "Informe o CEP" : c.frete ? real(c.frete) : "Grátis"}</span></div>
+      <div class="total"><span>Total</span><span>${real(c.total)}</span></div>
+      ${parcelas > 1 ? `<small>Em ${parcelas}x de ${real(c.total / parcelas)} sem juros no cartão.</small>` : ""}
+      ${c.consultar ? `<small>Mais ${pecas(c.consultar)} com valor a consultar, cobrado à parte depois da confirmação.</small>` : ""}
+    </div>
+  </details>
+  <p class="selo-seguro"><svg aria-hidden="true"><use href="#i-cadeado"/></svg>Compra protegida, com os dados enviados de forma criptografada.</p>`;
+}
+function desenharCk() {
+  const passo = ck.etapa === "pix" ? 2 : ck.etapa;
+  document.querySelectorAll("#ck-etapas li").forEach(li => {
+    const e = +li.dataset.e;
+    li.toggleAttribute("aria-current", e === passo);
+    if (e === passo) li.setAttribute("aria-current", "step");
+    li.classList.toggle("feita", e < passo);
+  });
+  ckForm.innerHTML = ck.etapa === 1 ? etapa1() : ck.etapa === 2 ? etapa2() : ck.etapa === "pix" ? etapaPix() : etapa3();
+  if (ck.etapa === 1 && fretes.length) desenharFretes();
+  if (ck.etapa === 1 && ck.cepAchado) $("#ck-cep-info").textContent = `${ck.cidade}/${ck.uf.toUpperCase()}`;
+  desenharResumo();
+  $("#ck-corpo").scrollTop = 0;
+  $("#ck-titulo").focus({ preventScroll: true });
+}
+
+function mascara(k, v) {
+  if (k === "cep") { v = v.replace(/\D/g, "").slice(0, 8); return v.length > 5 ? v.slice(0, 5) + "-" + v.slice(5) : v; }
+  if (k === "cel") {
+    v = v.replace(/\D/g, "").slice(0, 11);
+    if (v.length <= 2) return v.length ? "(" + v : v;
+    const meio = v.length > 10 ? 7 : 6;
+    return `(${v.slice(0, 2)}) ${v.slice(2, meio)}${v.length > meio ? "-" + v.slice(meio) : ""}`;
+  }
+  if (k === "uf") return v.replace(/[^a-zA-Z]/g, "").slice(0, 2).toUpperCase();
+  return v;
+}
+async function buscarCepCk() {
+  const v = ck.cep.replace(/\D/g, ""), info = $("#ck-cep-info");
   info.textContent = "Consultando o CEP...";
   try {
     const r = await fetch(`https://viacep.com.br/ws/${v}/json/`);
     const d = await r.json();
     if (d.erro) throw 0;
-    cidade = d;
-    info.innerHTML = `Entrega em <strong>${esc(d.localidade)}/${esc(d.uf)}</strong>${d.bairro ? `, bairro ${esc(d.bairro)}` : ""}.`;
-    $("#retirada").innerHTML = d.localidade === "Cravinhos" && d.uf === "SP"
-      ? `<fieldset><legend>Como prefere receber?</legend><div class="pilulas"><label><input type="radio" name="receber" value="entrega" ${retirar ? "" : "checked"}><span>Entrega</span></label><label><input type="radio" name="receber" value="retirar" ${retirar ? "checked" : ""}><span>Retirar na loja</span></label></div></fieldset>` : "";
-    $("#retirada").onchange = ev => { retirar = ev.target.value === "retirar"; montarPedido(); };
+    if (ck.cep.replace(/\D/g, "") !== v) return;
+    Object.assign(ck, { rua: d.logradouro || ck.rua, bairro: d.bairro || ck.bairro, cidade: d.localidade, uf: d.uf, cepAchado: true });
+    info.textContent = `${d.localidade}/${d.uf}`;
   } catch {
-    cidade = null;
-    info.textContent = "Não encontramos este CEP. Confira os números ou envie o pedido assim mesmo.";
-    $("#retirada").innerHTML = "";
+    ck.cepAchado = false;
+    info.textContent = "Não encontramos este CEP. Confira os números ou preencha o endereço abaixo.";
   }
-  montarPedido();
+  ["rua", "bairro", "cidade", "uf"].forEach(k => { const el = $("#ck-" + k); if (el) el.value = ck[k]; });
+  calcFretes();
+  desenharFretes();
+  desenharResumo();
 }
-function montarPedido() {
-  const balao = $("#balao-sacola");
-  if (!balao) return;
-  const { soma, consultar } = totais();
-  const linhas = itens.map(i => {
-    const p = PECAS.find(x => x.id === i.id), c = p.cores[i.cor] || p.cores[0];
-    return `- ${p.nome}, cor ${c.nome}, tamanho ${i.tam}, ${i.qtd} ${i.qtd > 1 ? "unidades" : "unidade"}${p.preco ? ", " + real(p.preco * i.qtd) : ", valor a consultar"}`;
-  });
-  let entrega = "";
-  if (retirar) entrega = "Retirada na loja.";
-  else if (cidade) entrega = `Entrega no CEP ${cep}, ${cidade.localidade}/${cidade.uf}.`;
-  else if (cep.replace(/\D/g, "").length === 8) entrega = `Entrega no CEP ${cep}.`;
-  const texto = ["Olá! Gostaria de fazer este pedido pelo site da SISS Store:", ...linhas,
-    soma ? `Subtotal: ${real(soma)}${consultar ? " (mais peças com valor a consultar)" : ""}.` : "",
-    entrega, nome.trim() ? `Nome: ${nome.trim()}.` : ""].filter(Boolean).join("\n");
-  balao.textContent = texto;
-  $("#enviar-pedido").href = zap(texto);
+function erro(k, msg) {
+  const el = $("#ck-" + k), er = $("#er-" + k);
+  if (el) el.setAttribute("aria-invalid", msg ? "true" : "false");
+  if (er) { er.textContent = msg || ""; er.hidden = !msg; }
+  return !!msg;
 }
+function validar1() {
+  const so = s => s.replace(/\D/g, "");
+  const regras = [
+    ["email", !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(ck.email.trim()) && "Informe um e-mail válido, como nome@email.com."],
+    ["cel", ![10, 11].includes(so(ck.cel).length) && "Informe o celular com DDD."],
+    ["nome", !/\S+\s+\S+/.test(ck.nome.trim()) && "Informe o nome e o sobrenome."],
+    ["cep", so(ck.cep).length !== 8 && "Informe o CEP com 8 números."],
+    ["frete", so(ck.cep).length === 8 && !ck.frete && "Escolha a forma de entrega."],
+  ];
+  if (ck.frete && ck.frete !== "retirar") regras.push(
+    ["rua", !ck.rua.trim() && "Informe a rua."],
+    ["numero", !ck.numero.trim() && "Informe o número. Se não houver, escreva s/n."],
+    ["bairro", !ck.bairro.trim() && "Informe o bairro."],
+    ["cidade", !ck.cidade.trim() && "Informe a cidade."],
+    ["uf", ck.uf.length !== 2 && "Informe a sigla do estado."]);
+  let primeiro = null;
+  regras.forEach(([k, msg]) => { if (erro(k, msg) && !primeiro) primeiro = k; });
+  if (primeiro) (primeiro === "frete" ? $("#ck-fretes-op input") : $("#ck-" + primeiro))?.focus();
+  return !primeiro;
+}
+function finalizar() {
+  const c = contas();
+  pedido = { num: ck.num, itens: itens.map(i => ({ ...i })), contas: c, frete: freteAtual(), endereco: enderecoTexto(),
+    nome: ck.nome, email: ck.email.trim(), cel: ck.cel, pag: ck.pag, parcelas: ck.parcelas };
+  itens = [];
+  salvar();
+  ck.etapa = 3;
+  desenharCk();
+}
+
+ckForm.addEventListener("input", e => {
+  const k = e.target.dataset.k;
+  if (!k) return;
+  const v = mascara(k, e.target.value);
+  if (v !== e.target.value) e.target.value = v;
+  ck[k] = v;
+  erro(k, "");
+  if (k === "cep") {
+    ck.cepAchado = false;
+    if (v.replace(/\D/g, "").length === 8) buscarCepCk();
+    else { fretes = []; ck.frete = null; $("#ck-cep-info").textContent = ""; desenharFretes(); desenharResumo(); }
+  }
+  if ((k === "uf" || k === "cidade") && fretes.length) { calcFretes(); desenharFretes(); desenharResumo(); }
+});
+ckForm.addEventListener("change", e => {
+  const t = e.target;
+  if (t.name === "frete") { ck.frete = t.value; erro("frete", ""); $("#ck-endereco").hidden = ck.frete === "retirar"; desenharResumo(); }
+  if (t.name === "pag") { ck.pag = t.value; ck.parcelas = 1; desenharCk(); ckForm.querySelector('input[name="pag"]:checked').focus(); }
+  if (t.id === "ck-parcelas") { ck.parcelas = +t.value; desenharResumo(); }
+});
+ckForm.addEventListener("submit", e => {
+  e.preventDefault();
+  if (ck.etapa === 1) { if (validar1()) { ck.etapa = 2; desenharCk(); } return; }
+  if (ck.etapa !== 2) return;
+  ck.num = 1000 + Math.floor(Math.random() * 9000);
+  if (ck.pag === "pix") {
+    ck.etapa = "pix";
+    desenharCk();
+    timer = setTimeout(finalizar, 6000);
+  } else {
+    const b = $("#ck-pagar");
+    b.disabled = true;
+    b.setAttribute("aria-busy", "true");
+    b.textContent = "Processando o pagamento...";
+    timer = setTimeout(finalizar, 1800);
+  }
+});
+checkout.addEventListener("click", async e => {
+  if (e.target === checkout || e.target.closest("[data-fechar]")) return fecharCk();
+  const b = e.target.closest("[data-ck]");
+  if (!b) return;
+  const acao = b.dataset.ck;
+  if (acao === "sacola") { fecharCk(); abrirSacola(); }
+  if (acao === "etapa1" || acao === "etapa2") { clearTimeout(timer); ck.etapa = +acao.slice(-1); desenharCk(); }
+  if (acao === "fim") fecharCk();
+  if (acao === "copiar") {
+    try { await navigator.clipboard.writeText($("#ck-codigo").value); } catch { $("#ck-codigo").select(); }
+    b.textContent = "Código copiado";
+  }
+});
+checkout.addEventListener("cancel", e => { e.preventDefault(); fecharCk(); });
+desktop.addEventListener("change", () => { if (checkout.open) desenharResumo(); });
 
 /* tamanho */
 const selPeca = $("#m-peca");

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Página não encontrada | SISS Store</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#3A2E2A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+@font-face { font-family: "Marcellus reserva"; src: local("Georgia"); size-adjust: 96%; }
+@font-face { font-family: "Jost reserva"; src: local("Arial"); size-adjust: 94%; }
+:root { --rose: #EFE4DC; --nevoa: #F7F1EC; --bronze: #7A5442; --cacau: #3A2E2A; --texto: #2E2522; --suave: #6B5C56; --linha: #E3D6CD; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; min-height: 100dvh; display: flex; flex-direction: column; background: var(--nevoa); color: var(--texto); font: 400 1.0625rem/1.6 "Jost", "Jost reserva", Arial, sans-serif; }
+:focus-visible { outline: 3px solid #E68FA5; outline-offset: 2px; }
+.topo { background: #fff; border-bottom: 1px solid var(--linha); }
+.topo div { width: min(100% - 2.5rem, 1240px); margin-inline: auto; min-height: 72px; display: flex; align-items: center; }
+.marca { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-height: 44px; text-decoration: none; color: var(--bronze); line-height: 1; }
+.marca b { font-family: "Marcellus", "Marcellus reserva", Georgia, serif; font-weight: 400; font-size: 1.75rem; letter-spacing: .32em; margin-right: -.32em; }
+.marca small { font-size: .62rem; letter-spacing: .5em; margin-right: -.5em; margin-top: .3rem; display: flex; align-items: center; gap: .5rem; }
+.marca small::before, .marca small::after { content: ""; width: 14px; height: 1px; background: currentColor; }
+main { flex: 1; display: grid; place-items: center; padding: 3rem 1.25rem 4rem; text-align: center; }
+.galho { width: min(260px, 70vw); margin: 0 auto 1.6rem; display: block; }
+.ramo { fill: none; stroke: #8A6556; stroke-linecap: round; }
+h1 { font-family: "Marcellus", "Marcellus reserva", Georgia, serif; font-weight: 400; font-size: clamp(2rem, 6vw, 2.8rem); line-height: 1.15; margin: 0 0 1rem; }
+p { margin: 0 auto 2rem; max-width: 30rem; color: var(--suave); }
+.botoes { display: flex; flex-wrap: wrap; gap: .8rem; justify-content: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: .7rem 1.4rem; border-radius: 999px; border: 1px solid var(--cacau); font-weight: 500; text-decoration: none; max-width: 100%; transition: background-color .25s; }
+.btn-escuro { background: var(--cacau); color: #fff; }
+.btn-escuro:hover { background: #241c19; }
+.btn-linha { background: #fff; color: var(--cacau); }
+.btn-linha:hover { background: var(--rose); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<header class="topo">
+  <div><a class="marca" href="/siss-store/" aria-label="SISS Store, início"><b>SISS</b><small>STORE</small></a></div>
+</header>
+<main>
+  <div>
+    <svg class="galho" viewBox="0 0 200 70" aria-hidden="true">
+      <defs>
+        <symbol id="flor" viewBox="-12 -12 24 24">
+          <g fill="#F5C6D2" stroke="#E68FA5" stroke-width=".8">
+            <path d="M0-1C-2.6-4.6-1.8-9.4 0-10.6 1.8-9.4 2.6-4.6 0-1Z"/>
+            <path d="M0-1C-2.6-4.6-1.8-9.4 0-10.6 1.8-9.4 2.6-4.6 0-1Z" transform="rotate(72)"/>
+            <path d="M0-1C-2.6-4.6-1.8-9.4 0-10.6 1.8-9.4 2.6-4.6 0-1Z" transform="rotate(144)"/>
+            <path d="M0-1C-2.6-4.6-1.8-9.4 0-10.6 1.8-9.4 2.6-4.6 0-1Z" transform="rotate(216)"/>
+            <path d="M0-1C-2.6-4.6-1.8-9.4 0-10.6 1.8-9.4 2.6-4.6 0-1Z" transform="rotate(288)"/>
+          </g>
+          <circle r="2.2" fill="#C9637E"/>
+        </symbol>
+      </defs>
+      <path class="ramo" stroke-width="2.5" d="M4 46c40-10 80-14 120-8s50 4 72-6"/>
+      <use href="#flor" x="30" y="18" width="30" height="30"/>
+      <use href="#flor" x="148" y="14" width="26" height="26"/>
+    </svg>
+    <h1>Esta página não está na nossa vitrine</h1>
+    <p>O endereço pode ter mudado ou a peça saiu da coleção. Veja as peças disponíveis ou fale com a nossa equipe.</p>
+    <div class="botoes">
+      <a class="btn btn-escuro" href="/siss-store/#colecao">Ver a coleção</a>
+      <a class="btn btn-linha" href="https://wa.me/5516974064343" target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>
