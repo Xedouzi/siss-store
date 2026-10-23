@@ -259,6 +259,16 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .medida em { position: absolute; right: .9rem; bottom: .85rem; font-style: normal; color: var(--suave); pointer-events: none; }
 .balao { background: #E7F6E3; border-radius: 4px 14px 14px 14px; padding: .9rem 1rem; font-size: .95rem; white-space: pre-line; color: #22301f; overflow-wrap: anywhere; }
 .balao-rotulo { font-size: .9rem; color: var(--suave); }
+.res-tam { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.1rem; background: var(--nevoa); border-radius: 14px; padding: 1rem 1.1rem; min-height: 5.6rem; }
+.res-selo { flex: none; display: grid; justify-items: center; min-width: 4.4rem; padding: .5rem .6rem; border-radius: 12px; background: var(--cacau); color: #fff; line-height: 1; }
+.res-selo b { font-family: var(--titulo); font-weight: 400; font-size: 2.2rem; }
+.res-selo span { font-size: .85rem; margin-top: .3rem; color: #F3E9E3; }
+.res-txt { display: grid; gap: .2rem; min-width: 0; flex: 1 1 10rem; }
+.res-txt strong { font-weight: 500; font-size: 1.05rem; }
+.res-txt p { color: var(--suave); font-size: .95rem; }
+.res-txt .res-peca { color: var(--texto); }
+.res-vazio { color: var(--suave); }
+.res-aviso { font-size: .88rem; color: var(--suave); margin-top: -.3rem; }
 
 /* loja */
 .loja-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: stretch; }
@@ -615,7 +625,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     <div class="envelope secao tamanho-grade">
       <div>
         <h2 id="titulo-tamanho">Qual é o seu tamanho?</h2>
-        <p class="intro">Cada modelagem veste de um jeito. Informe as suas medidas e indicamos o tamanho certo da peça antes de você comprar.</p>
+        <p class="intro">Cada modelagem veste de um jeito. Informe as suas medidas e mostramos na hora o tamanho indicado. A nossa equipe confirma o tamanho de cada peça antes do envio.</p>
         <ol>
           <li>Com uma fita métrica, meça o busto na parte mais cheia.</li>
           <li>Meça a cintura na parte mais fina, acima do umbigo.</li>
@@ -636,10 +646,12 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
             <select id="m-peca"><option value="">Nenhuma específica</option></select>
           </label>
         </div>
+        <div class="res-tam" id="res-tam" aria-live="polite"></div>
+        <p class="res-aviso">Indicação pela tabela de medidas de referência do mercado brasileiro. Cada modelagem veste de um jeito: a nossa equipe confirma o tamanho antes do envio.</p>
         <p class="balao-rotulo">Mensagem que será enviada:</p>
         <p class="balao" id="balao-tam"></p>
-        <p class="erro" id="erro-tam" hidden>Informe pelo menos uma medida para indicarmos o tamanho.</p>
-        <button class="btn btn-zap" type="submit"><svg aria-hidden="true"><use href="#i-zap"/></svg>Pedir indicação de tamanho</button>
+        <p class="erro" id="erro-tam" hidden>Informe pelo menos uma medida para confirmarmos o tamanho.</p>
+        <button class="btn btn-zap" type="submit"><svg aria-hidden="true"><use href="#i-zap"/></svg>Confirmar tamanho no WhatsApp</button>
       </form>
     </div>
   </section>
@@ -1300,28 +1312,82 @@ checkout.addEventListener("cancel", e => { e.preventDefault(); fecharCk(); });
 desktop.addEventListener("change", () => { if (checkout.open) desenharResumo(); });
 
 /* tamanho */
+// Tabela de referência do mercado (faixas de 4 cm, base ABNT), usada só na demonstração.
+// Na loja de verdade, trocar pelos números da tabela de medidas da própria loja.
+// Cada linha: numeração, letra, e o maior valor de busto, cintura e quadril daquele tamanho.
+const TABELA = [
+  ["34", "PP", 80, 61, 89], ["36", "PP", 85, 66, 94], ["38", "P", 89, 70, 98], ["40", "P", 93, 74, 102], ["42", "M", 97, 78, 106],
+  ["44", "M", 101, 82, 110], ["46", "G", 105, 86, 114], ["48", "G", 110, 91, 119], ["50", "GG", 115, 96, 124],
+];
+const MENORES = [76, 57, 85]; // início da faixa do 34
+const MEDIDAS = [["o busto", "#m-busto", 60, 170], ["a cintura", "#m-cintura", 45, 160], ["o quadril", "#m-quadril", 65, 180]];
+const por = nome => (nome[0] === "a" ? "Pela " : "Pelo ") + nome.slice(2), de = nome => (nome[0] === "a" ? "da " : "do ") + nome.slice(2);
+const medidaEstranha = () => MEDIDAS.find(([, sel, min, max]) => { const v = +$(sel).value; return v && (v < min || v > max); });
 const selPeca = $("#m-peca");
-PECAS.forEach(p => selPeca.insertAdjacentHTML("beforeend", `<option>${esc(p.nome)}</option>`));
+PECAS.forEach(p => selPeca.insertAdjacentHTML("beforeend", `<option value="${p.id}">${esc(p.nome)}</option>`));
+function calcularTamanho() {
+  const lidas = MEDIDAS.map(([nome, sel, min, max], i) => {
+    const v = +$(sel).value;
+    if (!v || v < min || v > max) return null;
+    const pos = v < MENORES[i] ? -1 : TABELA.findIndex(l => v <= l[i + 2]);
+    return { nome, v, pos: pos === -1 && v >= MENORES[i] ? TABELA.length : pos };
+  }).filter(Boolean);
+  if (!lidas.length) return null;
+  // a peça precisa servir na maior medida
+  const maior = lidas.reduce((a, b) => (b.pos > a.pos ? b : a));
+  return { lidas, maior, linha: TABELA[maior.pos] || null, mesmas: lidas.every(l => l.pos === maior.pos) };
+}
+function pecaEscolhida() { return PECAS.find(p => p.id === selPeca.value) || null; }
+function desenharResultado() {
+  const r = calcularTamanho(), p = pecaEscolhida(), caixa = $("#res-tam"), estranha = medidaEstranha();
+  if (estranha) { caixa.innerHTML = `<div class="res-txt"><strong>Confira a medida ${de(estranha[0])}</strong><p>Use centímetros, medidos com a fita métrica.</p></div>`; return; }
+  if (!r) { caixa.innerHTML = `<p class="res-vazio">Preencha pelo menos uma medida para ver o tamanho indicado.</p>`; return; }
+  if (!r.linha) {
+    const abaixo = r.maior.pos === -1 && r.lidas.every(l => l.pos === -1);
+    caixa.innerHTML = `<div class="res-txt"><strong>${abaixo ? "Suas medidas ficam abaixo do 34" : "Suas medidas ficam acima do 50"}</strong><p>Fale com a nossa equipe pelo WhatsApp: indicamos as peças e a modelagem que vestem melhor.</p></div>`;
+    return;
+  }
+  const [num, letra] = r.linha;
+  const motivo = r.mesmas
+    ? (r.lidas.length > 1 ? "Suas medidas batem com esse tamanho." : `Pela medida ${de(r.maior.nome)}.`)
+    : `${por(r.maior.nome)}, que é a sua maior medida na tabela.`;
+  let linhaPeca = "";
+  if (p) {
+    const grade = p.tamanhos;
+    const tem = grade && (grade.includes(num) || grade.includes(letra));
+    linhaPeca = !grade ? `${esc(p.nome)}: a nossa equipe confirma os tamanhos.`
+      : tem ? `${esc(p.nome)}: tamanho ${grade.includes(num) ? num : letra} disponível.`
+      : `${esc(p.nome)} vai do ${grade[0]} ao ${grade[grade.length - 1]}. Fale com a nossa equipe sobre o seu tamanho.`;
+  }
+  caixa.innerHTML = `<div class="res-selo" aria-hidden="true"><b>${num}</b><span>${letra}</span></div>
+    <div class="res-txt"><strong>Tamanho indicado: ${num} (${letra})</strong><p>${motivo}</p>${linhaPeca ? `<p class="res-peca">${linhaPeca}</p>` : ""}</div>`;
+}
 function textoTamanho() {
   const b = $("#m-busto").value, c = $("#m-cintura").value, q = $("#m-quadril").value;
   const medidas = [b && `busto ${b} cm`, c && `cintura ${c} cm`, q && `quadril ${q} cm`].filter(Boolean);
-  const usa = $("#m-usa").value, peca = selPeca.value;
-  return ["Olá! Gostaria de ajuda para escolher o tamanho" + (peca ? ` da peça ${peca}` : "") + ".",
+  const usa = $("#m-usa").value, peca = pecaEscolhida(), r = calcularTamanho();
+  return ["Olá! Gostaria de confirmar o tamanho" + (peca ? ` da peça ${peca.nome}` : "") + ".",
     medidas.length ? "Minhas medidas: " + medidas.join(", ") + "." : "Minhas medidas: (preencha no site)",
+    r && r.linha ? `Pela tabela do site, meu tamanho seria ${r.linha[0]} (${r.linha[1]}).` : "",
     usa ? `Costumo usar o tamanho ${usa}.` : ""].filter(Boolean).join("\n");
 }
 const formTam = $("#form-tam");
 formTam.addEventListener("input", e => {
   if (e.target.matches(".medida input")) e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
-  $("#balao-tam").textContent = textoTamanho();
+  atualizarTamanho();
   $("#erro-tam").hidden = true;
 });
+formTam.addEventListener("change", atualizarTamanho);
+function atualizarTamanho() {
+  desenharResultado();
+  $("#balao-tam").textContent = textoTamanho();
+}
 formTam.addEventListener("submit", e => {
   e.preventDefault();
   if (!["#m-busto", "#m-cintura", "#m-quadril"].some(s => $(s).value)) { $("#erro-tam").hidden = false; $("#m-busto").focus(); return; }
   window.open(zap(textoTamanho()), "_blank", "noopener");
 });
-$("#balao-tam").textContent = textoTamanho();
+atualizarTamanho();
 
 /* fita métrica */
 let larguraFita = 0;
