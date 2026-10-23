@@ -154,27 +154,32 @@ main section[id] { scroll-margin-top: 84px; }
 .cabeca h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); }
 .cabeca p { color: var(--suave); max-width: 34rem; margin-top: .6rem; }
 
-/* filtros e vitrine */
-.filtros { display: grid; gap: .7rem; margin: -.6rem 0 2.2rem; }
-.filtro-linha { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
-.filtro-rotulo { min-width: 3.6rem; color: var(--suave); font-size: .95rem; }
-.filtro-op { display: flex; flex-wrap: wrap; gap: .5rem; min-width: 0; }
-.filtros button { min-height: 44px; padding: .45rem 1.1rem; border-radius: 999px; border: 1px solid var(--linha); background: #fff; cursor: pointer; transition: background-color .25s, border-color .25s, color .25s; }
-.filtros button:hover { border-color: var(--bronze); }
-.filtros button[aria-pressed="true"] { background: var(--cacau); border-color: var(--cacau); color: #fff; }
-.vitrine { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem 1.25rem; }
+/* fileiras da vitrine */
+.fileiras { display: grid; gap: 3.2rem; }
+.fileira-cabeca { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
+.fileira-cabeca h3 { font-size: 1.75rem; }
+.fileira-cabeca small { font-family: var(--corpo); font-size: .95rem; color: var(--suave); margin-left: .2rem; letter-spacing: 0; }
+.setas { display: flex; gap: .5rem; flex: none; }
+.setas[hidden] { display: none; }
+.setas button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--linha); background: #fff; color: var(--cacau); display: grid; place-items: center; cursor: pointer; transition: border-color .25s, background-color .25s, opacity .25s; }
+.setas button:hover { border-color: var(--bronze); }
+.setas button[aria-disabled="true"] { opacity: .35; cursor: default; border-color: var(--linha); }
+.setas svg { width: 20px; height: 20px; }
+.setas [data-rolar="-1"] svg { transform: scaleX(-1); }
+.vitrine { list-style: none; margin: 0; padding: .3rem 0 .4rem; display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 3 * 1.25rem) / 4); gap: 1.25rem; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.vitrine::-webkit-scrollbar { display: none; }
+.vitrine > li { scroll-snap-align: start; }
 .peca { display: flex; flex-direction: column; min-width: 0; }
 .peca-foto { position: relative; display: block; width: 100%; padding: 0; border: 0; background: var(--rose); border-radius: var(--raio); overflow: hidden; cursor: pointer; aspect-ratio: 3 / 4; }
 .peca-foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
 .peca-foto:hover img { transform: scale(1.03); }
 .selo { position: absolute; left: .7rem; top: .7rem; max-width: calc(100% - 1.4rem); overflow-wrap: anywhere; line-height: 1.3; background: #fff; color: var(--cacau); font-size: .82rem; padding: .25rem .7rem; border-radius: 999px; }
-.peca h3 { font-family: var(--corpo); font-weight: 500; font-size: 1.05rem; margin-top: .8rem; }
+.peca h4 { font-family: var(--corpo); font-weight: 500; font-size: 1.05rem; margin: .8rem 0 0; }
 .peca .preco { color: var(--bronze); font-weight: 500; }
 .peca .preco.consultar { font-weight: 400; color: var(--suave); }
 .peca .tam { color: var(--suave); font-size: .92rem; }
 .cores-mini { display: flex; gap: .35rem; margin-top: .4rem; }
 .cores-mini span { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
-.vitrine-vazia { grid-column: 1 / -1; color: var(--suave); display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.2rem; }
 
 /* ficha */
 dialog { border: 0; padding: 0; color: var(--texto); background: #fff; }
@@ -400,7 +405,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .menu a { padding: .6rem .6rem; }
 }
 @media (max-width: 1100px) {
-  .vitrine { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .vitrine { grid-auto-columns: calc((100% - 2 * 1.25rem) / 3); }
   .avaliacoes-grade { grid-template-columns: minmax(0, 1fr); }
   .rodape-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -443,7 +448,10 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .abertura-texto { padding: 1.8rem 0 2.4rem; }
   .abertura h1 { font-size: 2.3rem; }
   .galho-abertura { width: 92vw; top: -14px; left: -20px; }
-  .vitrine { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem .8rem; }
+  .vitrine { grid-auto-columns: 44%; gap: .8rem; margin-inline: -1.25rem; padding-inline: 1.25rem; scroll-padding-inline: 1.25rem; }
+  .fileiras { gap: 2.4rem; }
+  .fileira-cabeca h3 { font-size: 1.45rem; }
+  .setas { display: none; }
   .ficha-grade { grid-template-columns: minmax(0, 1fr); }
   .ficha-foto img { aspect-ratio: 4 / 5; }
   .ficha-info { padding: 1.4rem; }
@@ -517,6 +525,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     </symbol>
     <symbol id="i-zap" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2a9.9 9.9 0 0 0-8.5 15l-1.4 5.1 5.24-1.37A9.9 9.9 0 1 0 12.04 2Zm0 18.1a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.1.82.83-3.03-.2-.31a8.2 8.2 0 1 1 6.95 3.85Zm4.5-6.14c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.55.12-.17.25-.64.8-.78.97-.14.17-.29.18-.53.06a6.7 6.7 0 0 1-3.34-2.92c-.25-.43.25-.4.72-1.34.08-.16.04-.3-.02-.43-.06-.12-.55-1.33-.76-1.82-.2-.48-.4-.41-.55-.42h-.47a.9.9 0 0 0-.65.3 2.74 2.74 0 0 0-.86 2.04 4.77 4.77 0 0 0 1 2.53 10.9 10.9 0 0 0 4.18 3.7c1.56.67 2.17.73 2.95.62.48-.07 1.46-.6 1.67-1.18.2-.58.2-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></symbol>
     <symbol id="i-sacola" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" d="M5 8h14l-1 12.5H6L5 8Zm3.5 0V6.5a3.5 3.5 0 0 1 7 0V8"/></symbol>
+    <symbol id="i-seta" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="m6 6 12 12M18 6 6 18"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.3" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
     <symbol id="i-estrela" viewBox="0 0 24 24"><path fill="currentColor" d="m12 3 2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6-4.5-4.2 6.1-.7L12 3Z"/></symbol>
@@ -597,16 +606,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
           <p>Toque na peça para escolher a cor e o tamanho.</p>
         </div>
       </div>
-      <div class="filtros" id="filtros">
-        <div class="filtro-linha" role="group" aria-labelledby="rotulo-tipo"><span class="filtro-rotulo" id="rotulo-tipo">Peças</span><div class="filtro-op" data-grupo="tipo"></div></div>
-        <div class="filtro-linha" role="group" aria-labelledby="rotulo-linha"><span class="filtro-rotulo" id="rotulo-linha">Linhas</span><div class="filtro-op" data-grupo="linha"></div></div>
-      </div>
-      <ul class="vitrine" id="vitrine" aria-live="polite">
-        <li class="peca"><div class="peca-foto"></div><h3>&nbsp;</h3><p>&nbsp;</p></li>
-        <li class="peca"><div class="peca-foto"></div><h3>&nbsp;</h3><p>&nbsp;</p></li>
-        <li class="peca"><div class="peca-foto"></div><h3>&nbsp;</h3><p>&nbsp;</p></li>
-        <li class="peca"><div class="peca-foto"></div><h3>&nbsp;</h3><p>&nbsp;</p></li>
-      </ul>
+      <div class="fileiras" id="fileiras"></div>
     </div>
   </section>
 
@@ -769,7 +769,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 const WHATSAPP = "5516974064343";
 
 // Peças: para cadastrar uma nova, copie um bloco. tipo: um dos TIPOS abaixo; grupos: as linhas da peça. preco: null = "Consultar valor"; tamanhos: null = consultar.
-// Filtros: só aparecem os tipos e as linhas que têm alguma peça cadastrada.
+// Fileiras da vitrine: cada linha e cada tipo com 2 peças ou mais ganha a sua.
 const TIPOS = [["conjuntos", "Conjuntos"], ["vestidos", "Vestidos"], ["macacoes", "Macacões"], ["saias", "Saias"], ["calcas", "Calças"], ["blusas", "Blusas"], ["camisetas", "Camisetas"]];
 const LINHAS = [["fascinio", "Coleção Fascínio"], ["plus", "Do 44 ao 50"], ["promo", "Coleção promocional"]];
 const PECAS = [
@@ -808,44 +808,62 @@ const ler = (k, padrao) => { try { const v = localStorage.getItem(k); return v ?
 const gravar = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
 
 /* vitrine */
-const filtro = { tipo: "todas", linha: "todas" };
 function textoTam(p) {
   if (!p.tamanhos) return "Tamanhos: consultar";
   return p.tamanhos[0] + " ao " + p.tamanhos[p.tamanhos.length - 1];
 }
+// Fileiras: uma por linha e uma por tipo de peça. Só aparece a fileira com 2 peças ou mais.
+const FILEIRAS = [
+  ...LINHAS.map(([id, nome]) => ({ id, nome, pecas: PECAS.filter(p => p.grupos.includes(id)) })),
+  ...TIPOS.map(([id, nome]) => ({ id, nome, pecas: PECAS.filter(p => p.tipo === id) })),
+].filter(f => f.pecas.length >= 2);
+const cartao = p => `
+      <li class="peca">
+        <button class="peca-foto revelar" type="button" data-peca="${p.id}" aria-label="Ver ${esc(p.nome)}">
+          <img src="${foto(p.cores[0].foto)}" width="750" height="1000" alt="" loading="lazy">
+          ${p.selo ? `<span class="selo">${esc(p.selo)}</span>` : ""}
+        </button>
+        <h4>${esc(p.nome)}</h4>
+        <p class="preco${p.preco ? "" : " consultar"}">${p.preco ? real(p.preco) : "Consultar valor"}</p>
+        <p class="tam">${textoTam(p)}</p>
+        ${p.cores.length > 1 ? `<div class="cores-mini" aria-label="${p.cores.length} cores">${p.cores.map(c => `<span style="background:${c.hex}" title="${esc(c.nome)}"></span>`).join("")}</div>` : ""}
+      </li>`;
 function desenharVitrine() {
-  const lista = PECAS.filter(p => (filtro.tipo === "todas" || p.tipo === filtro.tipo) && (filtro.linha === "todas" || p.grupos.includes(filtro.linha)));
-  $("#vitrine").innerHTML = lista.length ? lista.map(p => `
-    <li class="peca">
-      <button class="peca-foto revelar" type="button" data-peca="${p.id}" aria-label="Ver ${esc(p.nome)}">
-        <img src="${foto(p.cores[0].foto)}" width="750" height="1000" alt="" loading="lazy">
-        ${p.selo ? `<span class="selo">${esc(p.selo)}</span>` : ""}
-      </button>
-      <h3>${esc(p.nome)}</h3>
-      <p class="preco${p.preco ? "" : " consultar"}">${p.preco ? real(p.preco) : "Consultar valor"}</p>
-      <p class="tam">${textoTam(p)}</p>
-      ${p.cores.length > 1 ? `<div class="cores-mini" aria-label="${p.cores.length} cores">${p.cores.map(c => `<span style="background:${c.hex}" title="${esc(c.nome)}"></span>`).join("")}</div>` : ""}
-    </li>`).join("") : `<li class="vitrine-vazia"><span>Nenhuma peça com esses filtros no momento.</span><button class="btn btn-linha" type="button" data-limpar>Ver todas as peças</button></li>`;
-  revelar($("#vitrine"));
+  $("#fileiras").innerHTML = FILEIRAS.map(f => `
+    <section class="fileira" aria-labelledby="fileira-${f.id}">
+      <div class="fileira-cabeca">
+        <h3 id="fileira-${f.id}">${esc(f.nome)} <small>${f.pecas.length} peças</small></h3>
+        <div class="setas">
+          <button type="button" data-rolar="-1" aria-label="Peças anteriores de ${esc(f.nome)}"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
+          <button type="button" data-rolar="1" aria-label="Próximas peças de ${esc(f.nome)}"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
+        </div>
+      </div>
+      <ul class="vitrine">${f.pecas.map(cartao).join("")}
+      </ul>
+    </section>`).join("");
+  atualizarSetas();
+  revelar($("#fileiras"));
 }
-function desenharFiltros() {
-  const usados = { tipo: TIPOS.filter(([id]) => PECAS.some(p => p.tipo === id)), linha: LINHAS.filter(([id]) => PECAS.some(p => p.grupos.includes(id))) };
-  document.querySelectorAll("#filtros .filtro-op").forEach(op => {
-    const g = op.dataset.grupo;
-    op.innerHTML = [["todas", "Todas"], ...usados[g]].map(([id, nome]) => `<button type="button" data-valor="${id}" aria-pressed="${filtro[g] === id}">${nome}</button>`).join("");
+function atualizarSetas(lista = document.querySelectorAll("#fileiras .vitrine")) {
+  lista.forEach(ul => {
+    const [ant, prox] = ul.closest(".fileira").querySelectorAll("[data-rolar]");
+    const fim = ul.scrollWidth - ul.clientWidth;
+    ant.closest(".setas").hidden = fim < 2;
+    ant.setAttribute("aria-disabled", ul.scrollLeft < 2);
+    prox.setAttribute("aria-disabled", ul.scrollLeft > fim - 2);
   });
 }
-$("#filtros").addEventListener("click", e => {
-  const b = e.target.closest("button[data-valor]");
-  if (!b) return;
-  const g = b.closest(".filtro-op").dataset.grupo;
-  filtro[g] = b.dataset.valor;
-  desenharFiltros();
-  desenharVitrine();
-  $(`#filtros .filtro-op[data-grupo="${g}"] [aria-pressed="true"]`).focus();
-});
-$("#vitrine").addEventListener("click", e => {
-  if (e.target.closest("[data-limpar]")) { filtro.tipo = filtro.linha = "todas"; desenharFiltros(); desenharVitrine(); return; }
+$("#fileiras").addEventListener("scroll", e => { if (e.target.matches?.(".vitrine")) atualizarSetas([e.target]); }, true);
+addEventListener("resize", () => atualizarSetas());
+$("#fileiras").addEventListener("click", e => {
+  const seta = e.target.closest("[data-rolar]");
+  if (seta) {
+    const ul = seta.closest(".fileira").querySelector(".vitrine");
+    atualizarSetas([ul]);
+    if (seta.getAttribute("aria-disabled") === "true") return;
+    ul.scrollBy({ left: +seta.dataset.rolar * ul.clientWidth, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    return;
+  }
   const b = e.target.closest("[data-peca]");
   if (b) abrirFicha(b.dataset.peca, b);
 });
@@ -1368,7 +1386,6 @@ function revelar(raiz = document) {
   });
 }
 
-desenharFiltros();
 desenharVitrine();
 contar();
 revelar();
