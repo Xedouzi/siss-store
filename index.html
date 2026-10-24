@@ -253,12 +253,9 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .tamanho ol li::before { content: counter(passo); font-family: var(--titulo); font-size: 1.6rem; color: var(--flor-clara); line-height: 1.1; }
 .form-tam { background: #fff; color: var(--texto); border-radius: 20px; padding: 1.6rem; display: grid; gap: 1rem; }
 .form-tam .tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
-.form-tam .duas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
 .medida { position: relative; }
 .medida input { padding-right: 2.6rem; }
 .medida em { position: absolute; right: .9rem; bottom: .85rem; font-style: normal; color: var(--suave); pointer-events: none; }
-.balao { background: #E7F6E3; border-radius: 4px 14px 14px 14px; padding: .9rem 1rem; font-size: .95rem; white-space: pre-line; color: #22301f; overflow-wrap: anywhere; }
-.balao-rotulo { font-size: .9rem; color: var(--suave); }
 .res-tam { display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.1rem; background: var(--nevoa); border-radius: 14px; padding: 1rem 1.1rem; min-height: 5.6rem; }
 .res-selo { flex: none; display: grid; justify-items: center; min-width: 4.4rem; padding: .5rem .6rem; border-radius: 12px; background: var(--cacau); color: #fff; line-height: 1; }
 .res-selo b { font-family: var(--titulo); font-weight: 400; font-size: 2.2rem; }
@@ -268,7 +265,6 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .res-txt p { color: var(--suave); font-size: .95rem; }
 .res-txt .res-peca { color: var(--texto); }
 .res-vazio { color: var(--suave); }
-.res-aviso { font-size: .88rem; color: var(--suave); margin-top: -.3rem; }
 
 /* loja */
 .loja-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: stretch; }
@@ -468,7 +464,6 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .ficha { width: 100%; max-height: 100dvh; border-radius: 0; margin: 0; max-width: 100%; height: 100dvh; }
   .sacola { border-radius: 0; }
   .form-tam .tres { grid-template-columns: minmax(0, 1fr); }
-  .form-tam .duas { grid-template-columns: minmax(0, 1fr); }
   .depoimentos { grid-template-columns: minmax(0, 1fr); }
   .rodape-grade { grid-template-columns: minmax(0, 1fr); }
 }
@@ -625,7 +620,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     <div class="envelope secao tamanho-grade">
       <div>
         <h2 id="titulo-tamanho">Qual é o seu tamanho?</h2>
-        <p class="intro">Cada modelagem veste de um jeito. Informe as suas medidas e mostramos na hora o tamanho indicado. A nossa equipe confirma o tamanho de cada peça antes do envio.</p>
+        <p class="intro">Cada modelagem veste de um jeito. Informe as suas medidas e mostramos na hora o tamanho indicado.</p>
         <ol>
           <li>Com uma fita métrica, meça o busto na parte mais cheia.</li>
           <li>Meça a cintura na parte mais fina, acima do umbigo.</li>
@@ -638,20 +633,10 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
           <label class="campo medida"><span>Cintura</span><input id="m-cintura" inputmode="numeric" maxlength="3" autocomplete="off"><em>cm</em></label>
           <label class="campo medida"><span>Quadril</span><input id="m-quadril" inputmode="numeric" maxlength="3" autocomplete="off"><em>cm</em></label>
         </div>
-        <div class="duas">
-          <label class="campo"><span>Tamanho que costuma usar</span>
-            <select id="m-usa"><option value="">Não sei</option><option>P</option><option>M</option><option>G</option><option>GG</option><option>44</option><option>46</option><option>48</option><option>50</option></select>
-          </label>
-          <label class="campo"><span>Peça de interesse <small>(opcional)</small></span>
-            <select id="m-peca"><option value="">Nenhuma específica</option></select>
-          </label>
-        </div>
+        <label class="campo"><span>Peça de interesse <small>(opcional)</small></span>
+          <select id="m-peca"><option value="">Nenhuma específica</option></select>
+        </label>
         <div class="res-tam" id="res-tam" aria-live="polite"></div>
-        <p class="res-aviso">Indicação pela tabela de medidas de referência do mercado brasileiro. Cada modelagem veste de um jeito: a nossa equipe confirma o tamanho antes do envio.</p>
-        <p class="balao-rotulo">Mensagem que será enviada:</p>
-        <p class="balao" id="balao-tam"></p>
-        <p class="erro" id="erro-tam" hidden>Informe pelo menos uma medida para confirmarmos o tamanho.</p>
-        <button class="btn btn-zap" type="submit"><svg aria-hidden="true"><use href="#i-zap"/></svg>Confirmar tamanho no WhatsApp</button>
       </form>
     </div>
   </section>
@@ -1362,32 +1347,14 @@ function desenharResultado() {
   caixa.innerHTML = `<div class="res-selo" aria-hidden="true"><b>${num}</b><span>${letra}</span></div>
     <div class="res-txt"><strong>Tamanho indicado: ${num} (${letra})</strong><p>${motivo}</p>${linhaPeca ? `<p class="res-peca">${linhaPeca}</p>` : ""}</div>`;
 }
-function textoTamanho() {
-  const b = $("#m-busto").value, c = $("#m-cintura").value, q = $("#m-quadril").value;
-  const medidas = [b && `busto ${b} cm`, c && `cintura ${c} cm`, q && `quadril ${q} cm`].filter(Boolean);
-  const usa = $("#m-usa").value, peca = pecaEscolhida(), r = calcularTamanho();
-  return ["Olá! Gostaria de confirmar o tamanho" + (peca ? ` da peça ${peca.nome}` : "") + ".",
-    medidas.length ? "Minhas medidas: " + medidas.join(", ") + "." : "Minhas medidas: (preencha no site)",
-    r && r.linha ? `Pela tabela do site, meu tamanho seria ${r.linha[0]} (${r.linha[1]}).` : "",
-    usa ? `Costumo usar o tamanho ${usa}.` : ""].filter(Boolean).join("\n");
-}
 const formTam = $("#form-tam");
 formTam.addEventListener("input", e => {
   if (e.target.matches(".medida input")) e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
-  atualizarTamanho();
-  $("#erro-tam").hidden = true;
-});
-formTam.addEventListener("change", atualizarTamanho);
-function atualizarTamanho() {
   desenharResultado();
-  $("#balao-tam").textContent = textoTamanho();
-}
-formTam.addEventListener("submit", e => {
-  e.preventDefault();
-  if (!["#m-busto", "#m-cintura", "#m-quadril"].some(s => $(s).value)) { $("#erro-tam").hidden = false; $("#m-busto").focus(); return; }
-  window.open(zap(textoTamanho()), "_blank", "noopener");
 });
-atualizarTamanho();
+formTam.addEventListener("change", desenharResultado);
+formTam.addEventListener("submit", e => e.preventDefault()); // o Enter não recarrega a página
+desenharResultado();
 
 /* fita métrica */
 let larguraFita = 0;
