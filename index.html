@@ -150,9 +150,17 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .secao { padding: clamp(3.5rem, 7vw, 6rem) 0; }
 main section[id] { scroll-margin-top: 84px; }
 .secao-nevoa { background: var(--nevoa); }
-.cabeca { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 2rem; margin-bottom: 2rem; }
-.cabeca h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); }
-.cabeca p { color: var(--suave); max-width: 34rem; margin-top: .6rem; }
+
+/* categorias: bolinhas que filtram a coleção */
+#colecao { padding-top: clamp(2.2rem, 4vw, 3rem); }
+.categorias { list-style: none; margin: 0 0 2.6rem; padding: .3rem 0 .4rem; display: flex; gap: 1.4rem; overflow-x: auto; scrollbar-width: none; }
+.categorias::-webkit-scrollbar { display: none; }
+.categorias li { flex: none; }
+.categorias button { display: grid; justify-items: center; align-content: start; gap: .6rem; width: 112px; padding: 4px 0 0; border: 0; background: none; cursor: pointer; color: var(--texto); font-size: .95rem; line-height: 1.3; text-align: center; }
+.categorias img { width: 104px; height: 104px; border-radius: 50%; object-fit: cover; object-position: 50% 22%; background: var(--rose); box-shadow: 0 0 0 1px var(--linha); transition: box-shadow .2s, transform .3s; }
+.categorias button:hover img { transform: scale(1.04); }
+.categorias [aria-pressed="true"] img { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--cacau); }
+.categorias [aria-pressed="true"] span { font-weight: 500; }
 
 /* fileiras da vitrine */
 .fileiras { display: grid; gap: 3.2rem; }
@@ -181,18 +189,61 @@ main section[id] { scroll-margin-top: 84px; }
 .cores-mini { display: flex; gap: .35rem; margin-top: .4rem; }
 .cores-mini span { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
 
-/* ficha */
+.peca h4 a { color: inherit; text-decoration: none; }
+.fileira-cabeca h3 { scroll-margin-top: 100px; }
+
 dialog { border: 0; padding: 0; color: var(--texto); background: #fff; }
 dialog::backdrop { background: rgba(38,30,27,.55); }
-.ficha { width: min(100% - 2rem, 960px); max-height: calc(100dvh - 2rem); border-radius: 20px; overflow: auto; }
-.ficha-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-.ficha-foto { background: var(--rose); }
-.ficha-foto img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 4; }
-.ficha-info { padding: 2rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.2rem; min-width: 0; }
-.ficha-info h2 { font-size: 2rem; padding-right: 2.5rem; }
-.ficha-info .preco { font-size: 1.4rem; color: var(--bronze); font-weight: 500; }
-.ficha-info .preco.consultar { font-size: 1.05rem; color: var(--suave); font-weight: 400; }
-.ficha-info .desc { color: var(--suave); }
+
+/* página da peça */
+.produto { padding: 1.4rem 0 5rem; }
+.trilha { display: flex; flex-wrap: wrap; align-items: center; gap: .2rem .5rem; list-style: none; margin: 0 0 1.4rem; padding: 0; font-size: .92rem; color: var(--suave); }
+.trilha li + li::before { content: "›"; margin-right: .5rem; color: #B9A79C; }
+.trilha a { color: var(--suave); text-decoration: none; display: inline-block; padding-block: .3rem; }
+.trilha a:hover { color: var(--bronze); text-decoration: underline; }
+.produto-grade { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3.5rem; align-items: start; }
+.galeria { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 1rem; min-width: 0; }
+.galeria.uma { grid-template-columns: minmax(0, 1fr); }
+.galeria-mini { display: grid; gap: .6rem; align-content: start; }
+.galeria-mini button { display: block; padding: 0; border: 1px solid var(--linha); border-radius: 10px; overflow: hidden; background: var(--rose); cursor: pointer; }
+.galeria-mini button[aria-current="true"] { border-color: var(--cacau); box-shadow: inset 0 0 0 1px var(--cacau); }
+.galeria-mini img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.galeria-palco { position: relative; border-radius: 20px; overflow: hidden; background: var(--rose); min-width: 0; }
+.galeria-trilho { list-style: none; margin: 0; padding: 0; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+.galeria-trilho::-webkit-scrollbar { display: none; }
+.galeria-trilho li { flex: 0 0 100%; scroll-snap-align: start; }
+.galeria-trilho img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.galeria-conta { position: absolute; right: .8rem; top: .8rem; background: rgba(255,255,255,.92); color: var(--cacau); border-radius: 999px; padding: .1rem .7rem; font-size: .85rem; }
+.produto-info { position: sticky; top: 108px; display: flex; flex-direction: column; gap: 1.3rem; min-width: 0; }
+.produto-info h1 { font-size: clamp(1.9rem, 3vw, 2.5rem); }
+.produto-info h1:focus { outline: none; }
+.selo-txt { align-self: flex-start; background: var(--rose); color: var(--cacau); font-size: .85rem; padding: .2rem .8rem; border-radius: 999px; margin-bottom: -.5rem; }
+.preco-bloco .preco { font-size: 1.9rem; color: var(--bronze); font-weight: 500; line-height: 1.2; }
+.preco-bloco .preco.consultar { font-size: 1.25rem; color: var(--suave); font-weight: 400; }
+.preco-bloco small { display: block; color: var(--suave); font-size: .95rem; margin-top: .2rem; }
+legend b { font-weight: 400; color: var(--suave); }
+.amostras { display: flex; flex-wrap: wrap; gap: .7rem; padding: 3px; }
+.amostras label { position: relative; display: block; }
+.amostras input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.amostras img { width: 58px; height: 58px; border-radius: 50%; object-fit: cover; object-position: 50% 30%; border: 2px solid #fff; box-shadow: 0 0 0 1px var(--linha); transition: box-shadow .2s; }
+.amostras input:checked + img { box-shadow: 0 0 0 2px var(--cacau); }
+.amostras input:focus-visible + img { outline: 3px solid var(--flor); outline-offset: 3px; }
+.produto-acoes { display: flex; flex-wrap: wrap; gap: .7rem; }
+.produto-acoes .btn { flex: 1 1 14rem; }
+.vantagens { list-style: none; margin: 0; padding: 1.1rem 1.2rem; border: 1px solid var(--linha); border-radius: var(--raio); display: grid; gap: .9rem; }
+.vantagens li { display: flex; gap: .8rem; align-items: flex-start; font-size: .95rem; color: var(--suave); }
+.vantagens svg { width: 22px; height: 22px; color: var(--bronze); flex: none; margin-top: .15rem; }
+.vantagens strong { display: block; font-weight: 500; color: var(--texto); }
+.detalhes details { border-bottom: 1px solid var(--linha); }
+.detalhes details:first-child { border-top: 1px solid var(--linha); }
+.detalhes summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 56px; font-weight: 500; }
+.detalhes summary::-webkit-details-marker { display: none; }
+.detalhes summary::after { content: ""; width: 8px; height: 8px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-3px) rotate(45deg); transition: transform .2s; flex: none; margin-right: .3rem; }
+.detalhes details[open] summary::after { transform: translateY(1px) rotate(-135deg); }
+.detalhes details > :not(summary) { margin-bottom: 1.1rem; color: var(--suave); }
+.relacionadas { margin-top: 4.5rem; }
+.relacionadas h2 { font-size: 1.75rem; margin-bottom: 1.2rem; }
+.barra-compra { display: none; }
 .fechar { position: absolute; top: .8rem; right: .8rem; width: 46px; height: 46px; border-radius: 50%; border: 0; background: rgba(255,255,255,.92); cursor: pointer; display: grid; place-items: center; z-index: 2; }
 .fechar svg { width: 22px; height: 22px; }
 fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
@@ -204,10 +255,6 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .pilulas input:checked + span { background: var(--cacau); border-color: var(--cacau); color: #fff; }
 .pilulas input:focus-visible + span { outline: 3px solid var(--flor); outline-offset: 2px; }
 .pilulas i { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.2); }
-.aviso-tam { font-size: .95rem; color: var(--suave); }
-.aviso-tam a { color: var(--bronze); }
-.ficha-acoes { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: auto; }
-.ficha-acoes .btn { flex: 1 1 14rem; }
 .erro { color: #A2322E; font-size: .95rem; }
 
 /* sacola */
@@ -242,17 +289,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .sacola-pe { padding: 1rem 1.4rem 1.4rem; border-top: 1px solid var(--linha); display: grid; gap: .6rem; padding-bottom: max(1.4rem, env(safe-area-inset-bottom)); }
 .sacola-pe .btn { width: 100%; }
 
-/* tamanho */
-.tamanho { background: var(--cacau); color: #fff; position: relative; }
-.fita { display: block; width: 100%; height: 46px; }
-.tamanho-grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 3rem; align-items: start; }
-.tamanho h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin-bottom: 1rem; }
-.tamanho .intro { color: #E9DCD4; max-width: 30rem; }
-.tamanho ol { margin: 1.6rem 0 0; padding: 0; list-style: none; display: grid; gap: .9rem; counter-reset: passo; }
-.tamanho ol li { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: .8rem; color: #E9DCD4; counter-increment: passo; }
-.tamanho ol li::before { content: counter(passo); font-family: var(--titulo); font-size: 1.6rem; color: var(--flor-clara); line-height: 1.1; }
-.form-tam { background: #fff; color: var(--texto); border-radius: 20px; padding: 1.6rem; display: grid; gap: 1rem; }
-.form-tam .tres { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; }
+/* tamanho na página da peça */
 .medida { position: relative; }
 .medida input { padding-right: 2.6rem; }
 .medida em { position: absolute; right: .9rem; bottom: .85rem; font-style: normal; color: var(--suave); pointer-events: none; }
@@ -265,6 +302,16 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .res-txt p { color: var(--suave); font-size: .95rem; }
 .res-txt .res-peca { color: var(--texto); }
 .res-vazio { color: var(--suave); }
+.achar-tam { border: 1px solid var(--linha); border-radius: var(--raio); margin-top: -.4rem; }
+.achar-tam summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 52px; padding: .3rem 1.1rem; color: var(--bronze); font-weight: 500; }
+.achar-tam summary::-webkit-details-marker { display: none; }
+.achar-tam summary::after { content: ""; width: 8px; height: 8px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-3px) rotate(45deg); transition: transform .2s; flex: none; }
+.achar-tam[open] summary::after { transform: translateY(1px) rotate(-135deg); }
+.achar-corpo { display: grid; gap: .9rem; padding: 0 1.1rem 1.1rem; }
+.achar-corpo .tres { display: grid; grid-template-columns: repeat(auto-fit, minmax(5.6rem, 1fr)); gap: .7rem; }
+.achar-dica { font-size: .9rem; color: var(--suave); }
+.ver-tabela { margin-top: .3rem; padding-left: 0; }
+#galeria { scroll-margin-top: 90px; }
 
 /* loja */
 .loja-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: stretch; }
@@ -416,6 +463,8 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .rodape-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 960px) {
+  .produto-grade { gap: 2rem; }
+  .galeria { grid-template-columns: 60px minmax(0, 1fr); gap: .7rem; }
   #menu-botao { display: block; order: 3; }
   .menu { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; background: #fff; border-bottom: 1px solid var(--linha); padding: .4rem 1.25rem 1rem; box-shadow: 0 12px 24px rgba(58,46,42,.08); }
   .menu.aberto { display: flex; }
@@ -428,7 +477,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .faixa-fotos img:nth-child(1) { display: none; }
   .faixa-fotos .foto-balcao { order: -1; }
   .abertura-texto { position: static; padding: 2.4rem 0 2.8rem; }
-  .tamanho-grade, .loja-grade { grid-template-columns: minmax(0, 1fr); }
+  .loja-grade { grid-template-columns: minmax(0, 1fr); }
   .loja-fotos { min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; }
   .loja-fotos img { position: static; width: 100%; height: auto; aspect-ratio: 9 / 16; }
   .loja-fotos img:nth-child(2) { margin-top: 2.5rem; }
@@ -456,14 +505,27 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .galho-abertura { width: 92vw; top: -14px; left: -20px; }
   .vitrine { grid-auto-columns: 44%; gap: .8rem; margin-inline: -1.25rem; padding-inline: 1.25rem; scroll-padding-inline: 1.25rem; }
   .fileiras { gap: 2.4rem; }
+  .categorias { gap: .8rem; margin: 0 -1.25rem 2rem; padding-inline: 1.25rem; }
+  .categorias button { width: 84px; font-size: .85rem; gap: .45rem; }
+  .categorias img { width: 76px; height: 76px; }
   .fileira-cabeca h3 { font-size: 1.45rem; }
   .setas { display: none; }
-  .ficha-grade { grid-template-columns: minmax(0, 1fr); }
-  .ficha-foto img { aspect-ratio: 4 / 5; }
-  .ficha-info { padding: 1.4rem; }
-  .ficha { width: 100%; max-height: 100dvh; border-radius: 0; margin: 0; max-width: 100%; height: 100dvh; }
+  .produto { padding: .6rem 0 7rem; }
+  .trilha { margin-bottom: .8rem; }
+  .produto-grade { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+  .galeria, .galeria.uma { grid-template-columns: minmax(0, 1fr); margin-inline: -1.25rem; }
+  .galeria-mini { display: none; }
+  .galeria-palco { border-radius: 0; }
+  .galeria-trilho img { aspect-ratio: 4 / 5; }
+  .produto-info { position: static; }
+  .produto-acoes .btn-escuro { display: none; }
+  .relacionadas { margin-top: 3rem; }
+  .relacionadas h2 { font-size: 1.45rem; }
+  .barra-compra { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; position: fixed; left: 0; right: 0; bottom: 0; z-index: 26; background: #fff; border-top: 1px solid var(--linha); padding: .7rem 1.25rem calc(.7rem + env(safe-area-inset-bottom)); }
+  .barra-compra p { font-weight: 500; color: var(--bronze); white-space: nowrap; }
+  .barra-compra .btn { flex: 1 1 11rem; min-width: 0; }
+  [data-vista="produto"] .zap-canto { display: none; }
   .sacola { border-radius: 0; }
-  .form-tam .tres { grid-template-columns: minmax(0, 1fr); }
   .depoimentos { grid-template-columns: minmax(0, 1fr); }
   .rodape-grade { grid-template-columns: minmax(0, 1fr); }
 }
@@ -504,7 +566,6 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .item { grid-template-columns: 48px minmax(0, 1fr); gap: .7rem; }
   .item img { width: 48px; }
   .sacola-topo, .sacola-corpo, .sacola-pe { padding-left: 1rem; padding-right: 1rem; }
-  .form-tam { padding: 1rem; }
   .btn { padding-inline: 1rem; }
   .btn > svg { display: none; }
 }
@@ -548,7 +609,6 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
     <a class="marca" href="#inicio" aria-label="SISS Store, início"><b>SISS</b><small>STORE</small></a>
     <nav class="menu" id="menu" aria-label="Principal">
       <a href="#colecao">Coleção</a>
-      <a href="#tamanho">Seu tamanho</a>
       <a href="#loja">A loja</a>
       <a href="#avaliacoes">Avaliações</a>
       <a class="menu-zap" href="https://wa.me/5516974064343" target="_blank" rel="noopener">WhatsApp (16) 97406-4343</a>
@@ -605,39 +665,9 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 
   <section class="secao" id="colecao" aria-labelledby="titulo-colecao">
     <div class="envelope">
-      <div class="cabeca">
-        <div>
-          <h2 id="titulo-colecao">Coleção</h2>
-          <p>Toque na peça para escolher a cor e o tamanho.</p>
-        </div>
-      </div>
+      <h2 class="sr" id="titulo-colecao">Coleção</h2>
+      <ul class="categorias" id="categorias" aria-label="Categorias"></ul>
       <div class="fileiras" id="fileiras"></div>
-    </div>
-  </section>
-
-  <section class="tamanho" id="tamanho" aria-labelledby="titulo-tamanho">
-    <svg class="fita" viewBox="0 0 1200 46" preserveAspectRatio="xMinYMin slice" aria-hidden="true" id="fita"></svg>
-    <div class="envelope secao tamanho-grade">
-      <div>
-        <h2 id="titulo-tamanho">Qual é o seu tamanho?</h2>
-        <p class="intro">Cada modelagem veste de um jeito. Informe as suas medidas e mostramos na hora o tamanho indicado.</p>
-        <ol>
-          <li>Com uma fita métrica, meça o busto na parte mais cheia.</li>
-          <li>Meça a cintura na parte mais fina, acima do umbigo.</li>
-          <li>Meça o quadril na parte mais larga, com os pés juntos.</li>
-        </ol>
-      </div>
-      <form class="form-tam" id="form-tam" novalidate>
-        <div class="tres">
-          <label class="campo medida"><span>Busto</span><input id="m-busto" inputmode="numeric" maxlength="3" autocomplete="off"><em>cm</em></label>
-          <label class="campo medida"><span>Cintura</span><input id="m-cintura" inputmode="numeric" maxlength="3" autocomplete="off"><em>cm</em></label>
-          <label class="campo medida"><span>Quadril</span><input id="m-quadril" inputmode="numeric" maxlength="3" autocomplete="off"><em>cm</em></label>
-        </div>
-        <label class="campo"><span>Peça de interesse <small>(opcional)</small></span>
-          <select id="m-peca"><option value="">Nenhuma específica</option></select>
-        </label>
-        <div class="res-tam" id="res-tam" aria-live="polite"></div>
-      </form>
     </div>
   </section>
 
@@ -701,11 +731,15 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   </section>
 </main>
 
+<main class="produto" id="produto" hidden>
+  <div class="envelope" id="produto-corpo"></div>
+</main>
+
 <footer class="rodape">
   <div class="envelope">
     <div class="rodape-grade">
       <div><a class="marca" href="#inicio" aria-label="SISS Store, voltar ao início"><b>SISS</b><small>STORE</small></a></div>
-      <div><h2>Navegação</h2><ul><li><a href="#colecao">Coleção</a></li><li><a href="#tamanho">Seu tamanho</a></li><li><a href="#loja">A loja</a></li><li><a href="#avaliacoes">Avaliações</a></li></ul></div>
+      <div><h2>Navegação</h2><ul><li><a href="#colecao">Coleção</a></li><li><a href="#loja">A loja</a></li><li><a href="#avaliacoes">Avaliações</a></li></ul></div>
       <div><h2>Atendimento</h2><ul><li><a href="https://wa.me/5516974064343" target="_blank" rel="noopener">WhatsApp (16) 97406-4343</a></li><li><a href="https://www.instagram.com/_sissstore/" target="_blank" rel="noopener">Instagram @_sissstore</a></li></ul></div>
       <div><h2>Endereço</h2><p>Rua XV de Novembro, 129<br>Centro, Cravinhos/SP<br>14140-000</p></div>
     </div>
@@ -717,25 +751,6 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 
 <a class="zap-canto" id="zap-canto" href="https://wa.me/5516974064343?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SISS%20Store." target="_blank" rel="noopener" aria-label="Conversar no WhatsApp" data-oculto><svg aria-hidden="true"><use href="#i-zap"/></svg></a>
 
-<dialog class="ficha" id="ficha" aria-labelledby="ficha-nome">
-  <button class="fechar" type="button" data-fechar aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
-  <div class="ficha-grade">
-    <div class="ficha-foto"><img id="ficha-img" src="img/aladim-marrom.webp" width="750" height="1000" alt=""></div>
-    <form class="ficha-info" id="ficha-form" novalidate>
-      <h2 id="ficha-nome">Peça</h2>
-      <p class="preco" id="ficha-preco"></p>
-      <p class="desc" id="ficha-desc"></p>
-      <fieldset id="ficha-cores"><legend>Cor</legend><div class="pilulas" id="ficha-cores-op"></div></fieldset>
-      <fieldset><legend>Tamanho</legend><div class="pilulas" id="ficha-tam-op"></div></fieldset>
-      <p class="aviso-tam">Na dúvida, <a href="#tamanho" data-fechar>informe suas medidas</a> e indicamos o tamanho.</p>
-      <p class="erro" id="ficha-erro" hidden>Escolha um tamanho para continuar.</p>
-      <div class="ficha-acoes">
-        <button class="btn btn-escuro" type="submit"><svg aria-hidden="true"><use href="#i-sacola"/></svg>Adicionar à sacola</button>
-        <a class="btn btn-linha" id="ficha-duvida" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Tirar dúvida</a>
-      </div>
-    </form>
-  </div>
-</dialog>
 
 <dialog class="sacola" id="sacola" aria-labelledby="sacola-titulo">
   <div class="sacola-topo">
@@ -766,21 +781,22 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 const WHATSAPP = "5516974064343";
 
 // Peças: para cadastrar uma nova, copie um bloco. tipo: um dos TIPOS abaixo; grupos: as linhas da peça. preco: null = "Consultar valor"; tamanhos: null = consultar.
+// tabela: a imagem da tabela de medidas da peça (entra por último nas fotos).
 // Fileiras da vitrine: cada linha e cada tipo com 2 peças ou mais ganha a sua.
 const TIPOS = [["conjuntos", "Conjuntos"], ["vestidos", "Vestidos"], ["macacoes", "Macacões"], ["saias", "Saias"], ["calcas", "Calças"], ["blusas", "Blusas"], ["camisetas", "Camisetas"]];
 const LINHAS = [["fascinio", "Coleção Fascínio"], ["plus", "Do 44 ao 50"], ["promo", "Coleção promocional"]];
 const PECAS = [
-  { id: "aladim", tipo: "conjuntos", nome: "Conjunto Aladim", preco: 159, grupos: [], selo: "Destaque",
+  { id: "aladim", tabela: "tabela-aladim", tipo: "conjuntos", nome: "Conjunto Aladim", preco: 159, grupos: [], selo: "Destaque",
     desc: "Caimento impecável, conforto e muita tendência em uma única produção.",
     tamanhos: ["P", "M", "G", "GG"],
     cores: [ { nome: "Marrom", hex: "#5B3F33", foto: "aladim-marrom" }, { nome: "Verde", hex: "#5E6B4F", foto: "aladim-verde" } ] },
-  { id: "listrado", tipo: "conjuntos", nome: "Conjunto listrado", preco: 159, grupos: ["promo"], selo: "Promocional",
+  { id: "listrado", tabela: "tabela-listrado", tipo: "conjuntos", nome: "Conjunto listrado", preco: 159, grupos: ["promo"], selo: "Promocional",
     desc: "Conjunto em listras da nossa Coleção Promocional, com ótimo caimento e tecido.",
     tamanhos: ["P", "M", "G", "GG"], cores: [ { nome: "Azul-marinho e branco", hex: "#1F2A44", foto: "listrado" } ] },
-  { id: "estruturado", tipo: "conjuntos", nome: "Conjunto estruturado", preco: null, grupos: ["plus"],
+  { id: "estruturado", tabela: "tabela-estruturado", tipo: "conjuntos", nome: "Conjunto estruturado", preco: null, grupos: ["plus"],
     desc: "Um conjunto todo estruturado, elegante e cheio de personalidade.",
     tamanhos: ["44", "46", "48", "50"], cores: [ { nome: "Caramelo", hex: "#A27B5C", foto: "estruturado" } ] },
-  { id: "blusa-short", tipo: "conjuntos", nome: "Conjunto blusa e short", preco: null, grupos: ["plus"],
+  { id: "blusa-short", tabela: "tabela-blusa-short", tipo: "conjuntos", nome: "Conjunto blusa e short", preco: null, grupos: ["plus"],
     desc: "Peças que ficam lindas juntas e também rendem várias produções separadas.",
     tamanhos: ["44", "46", "48", "50"], cores: [ { nome: "Branco", hex: "#F4F1EC", foto: "blusa-short-branco" } ] },
   { id: "macacao", tipo: "macacoes", nome: "Macacão branco", preco: null, grupos: ["fascinio"],
@@ -791,7 +807,7 @@ const PECAS = [
   { id: "tshirt", tipo: "camisetas", nome: "T-shirt bordada", preco: null, grupos: ["fascinio"],
     desc: "Uma t-shirt nada óbvia, com bordado delicado e um toque de sofisticação.",
     tamanhos: null, cores: [ { nome: "Off-white", hex: "#F1ECE4", foto: "tshirt-bordada" } ] },
-  { id: "creme", tipo: "conjuntos", nome: "Conjunto creme", preco: null, grupos: ["plus"],
+  { id: "creme", tabela: "tabela-creme", tipo: "conjuntos", nome: "Conjunto creme", preco: null, grupos: ["plus"],
     desc: "Moderno, elegante e com detalhes que fazem toda a diferença.",
     tamanhos: ["44", "46", "48", "50"], cores: [ { nome: "Creme", hex: "#EFE3BF", foto: "conjunto-creme" } ] },
 ];
@@ -816,20 +832,38 @@ const FILEIRAS = [
 ].filter(f => f.pecas.length >= 2);
 const cartao = p => `
       <li class="peca">
-        <button class="peca-foto revelar" type="button" data-peca="${p.id}" aria-label="Ver ${esc(p.nome)}">
+        <a class="peca-foto revelar" href="?peca=${p.id}" aria-label="${esc(p.nome)}">
           <img src="${foto(p.cores[0].foto)}" width="750" height="1000" alt="" loading="lazy">
           ${p.selo ? `<span class="selo">${esc(p.selo)}</span>` : ""}
-        </button>
-        <h4>${esc(p.nome)}</h4>
+        </a>
+        <h4><a href="?peca=${p.id}" tabindex="-1">${esc(p.nome)}</a></h4>
         <p class="preco${p.preco ? "" : " consultar"}">${p.preco ? real(p.preco) : "Consultar valor"}</p>
         <p class="tam">${textoTam(p)}</p>
         ${p.cores.length > 1 ? `<div class="cores-mini" aria-label="${p.cores.length} cores">${p.cores.map(c => `<span style="background:${c.hex}" title="${esc(c.nome)}"></span>`).join("")}</div>` : ""}
       </li>`;
-function desenharVitrine() {
-  $("#fileiras").innerHTML = FILEIRAS.map(f => `
+// Categorias (bolinhas no alto da coleção): cada linha e cada tipo com pelo menos 1 peça. "Tudo" mostra todas as fileiras.
+const CATEGORIAS = [...LINHAS, ...TIPOS]
+  .map(([id, nome]) => ({ id, nome, pecas: PECAS.filter(p => p.tipo === id || p.grupos.includes(id)) }))
+  .filter(c => c.pecas.length);
+let categoria = "";
+function desenharCategorias() {
+  // cada bolinha com uma foto diferente, quando dá
+  const usadas = new Set(["aladim-verde"]);
+  const fotoDe = c => { const p = c.pecas.find(x => !usadas.has(x.cores[0].foto)) || c.pecas[0]; usadas.add(p.cores[0].foto); return p.cores[0].foto; };
+  $("#categorias").innerHTML = [{ id: "", nome: "Tudo", foto: "aladim-verde" }, ...CATEGORIAS.map(c => ({ id: c.id, nome: c.nome, foto: fotoDe(c) }))]
+    .map(c => `<li><button type="button" data-categoria="${c.id}" aria-pressed="${c.id === categoria}"><img src="${foto(c.foto)}" width="104" height="104" alt="" loading="lazy"><span>${esc(c.nome)}</span></button></li>`).join("");
+}
+function filtrar(id) {
+  categoria = id;
+  $("#categorias").querySelectorAll("[data-categoria]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.categoria === id)));
+  desenharVitrine(id ? CATEGORIAS.filter(c => c.id === id) : FILEIRAS);
+}
+$("#categorias").addEventListener("click", e => { const b = e.target.closest("[data-categoria]"); if (b) filtrar(b.dataset.categoria); });
+function desenharVitrine(lista = FILEIRAS) {
+  $("#fileiras").innerHTML = lista.map(f => `
     <section class="fileira" aria-labelledby="fileira-${f.id}">
       <div class="fileira-cabeca">
-        <h3 id="fileira-${f.id}">${esc(f.nome)} <small>${f.pecas.length} peças</small></h3>
+        <h3 id="fileira-${f.id}">${esc(f.nome)} <small>${f.pecas.length} ${f.pecas.length > 1 ? "peças" : "peça"}</small></h3>
         <div class="setas">
           <button type="button" data-rolar="-1" aria-label="Peças anteriores de ${esc(f.nome)}"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
           <button type="button" data-rolar="1" aria-label="Próximas peças de ${esc(f.nome)}"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
@@ -859,57 +893,177 @@ $("#fileiras").addEventListener("click", e => {
     atualizarSetas([ul]);
     if (seta.getAttribute("aria-disabled") === "true") return;
     ul.scrollBy({ left: +seta.dataset.rolar * ul.clientWidth, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    return;
   }
-  const b = e.target.closest("[data-peca]");
-  if (b) abrirFicha(b.dataset.peca, b);
 });
 
-/* ficha */
-const ficha = $("#ficha");
-let atual = null, voltarFoco = null;
-function abrirFicha(id, origem) {
-  atual = PECAS.find(p => p.id === id);
-  voltarFoco = origem || null;
-  const p = atual;
-  $("#ficha-nome").textContent = p.nome;
-  const preco = $("#ficha-preco");
-  preco.textContent = p.preco ? real(p.preco) : "Consultar valor";
-  preco.className = "preco" + (p.preco ? "" : " consultar");
-  $("#ficha-desc").textContent = p.desc;
-  $("#ficha-cores").hidden = p.cores.length < 2;
-  $("#ficha-cores-op").innerHTML = p.cores.map((c, i) => `<label><input type="radio" name="cor" value="${i}" ${i ? "" : "checked"}><span><i style="background:${c.hex}"></i>${esc(c.nome)}</span></label>`).join("");
-  $("#ficha-tam-op").innerHTML = p.tamanhos
-    ? p.tamanhos.map(t => `<label><input type="radio" name="tam" value="${t}"><span>${t}</span></label>`).join("")
-    : `<label><input type="radio" name="tam" value="a confirmar" checked><span>Consultar tamanhos</span></label>`;
-  $("#ficha-erro").hidden = true;
-  trocarFoto();
-  ficha.showModal();
-  $("#ficha-nome").focus?.();
+/* página da peça: cada peça tem o seu endereço (?peca=id), como numa loja grande */
+const paginaPeca = $("#produto"), inicio = $("#inicio"), TITULO = document.title;
+let atual = null, rolagemInicio = 0;
+history.scrollRestoration = "manual";
+const nomeTipo = id => (TIPOS.find(t => t[0] === id) || [, "Coleção"])[1];
+// Primeiro as peças do mesmo tipo ou da mesma linha, depois as outras.
+function relacionadas(p) {
+  const outras = PECAS.filter(o => o.id !== p.id);
+  const perto = outras.filter(o => o.tipo === p.tipo || o.grupos.some(g => p.grupos.includes(g)));
+  return [...perto, ...outras.filter(o => !perto.includes(o))].slice(0, 8);
 }
-function corAtual() { const r = ficha.querySelector('input[name="cor"]:checked'); return atual.cores[r ? +r.value : 0]; }
-function trocarFoto() {
-  const c = corAtual();
-  const img = $("#ficha-img");
-  img.src = foto(c.foto);
-  img.alt = `${atual.nome}, cor ${c.nome}`;
-  $("#ficha-duvida").href = zap(`Olá! Tenho uma dúvida sobre a peça ${atual.nome} (cor ${c.nome}).`);
+function desenharPeca(p) {
+  const preco = p.preco ? real(p.preco) : "Consultar valor";
+  $("#produto-corpo").innerHTML = `
+    <nav aria-label="Caminho"><ol class="trilha">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#colecao" data-categoria="${p.tipo}">${esc(nomeTipo(p.tipo))}</a></li>
+      <li aria-current="page">${esc(p.nome)}</li>
+    </ol></nav>
+    <div class="produto-grade">
+      <div class="galeria" id="galeria"></div>
+      <form class="produto-info" id="peca-form" novalidate>
+        ${p.selo ? `<p class="selo-txt">${esc(p.selo)}</p>` : ""}
+        <h1 id="peca-nome" tabindex="-1">${esc(p.nome)}</h1>
+        <div class="preco-bloco">
+          <p class="preco${p.preco ? "" : " consultar"}">${preco}</p>
+          ${p.preco ? `<small>ou 3x de ${real(p.preco / 3)} no cartão</small>` : `<small>Confirmamos o valor pelo WhatsApp.</small>`}
+        </div>
+        <fieldset>
+          <legend>Cor: <b id="peca-cor">${esc(p.cores[0].nome)}</b></legend>
+          <div class="amostras">${p.cores.map((c, i) => `<label><input type="radio" name="cor" value="${i}" ${i ? "" : "checked"} aria-label="${esc(c.nome)}"><img src="${foto(c.foto)}" width="58" height="58" alt=""></label>`).join("")}</div>
+        </fieldset>
+        <fieldset id="peca-tams">
+          <legend>Tamanho</legend>
+          <div class="pilulas">${p.tamanhos
+            ? p.tamanhos.map(t => `<label><input type="radio" name="tam" value="${t}"><span>${t}</span></label>`).join("")
+            : `<label><input type="radio" name="tam" value="a confirmar" checked><span>Consultar tamanhos</span></label>`}</div>
+          ${p.tabela ? `<button class="link ver-tabela" type="button" data-ver-tabela>Ver tabela de medidas</button>` : ""}
+        </fieldset>
+        ${p.tamanhos ? achadorTamanho() : ""}
+        <p class="erro" id="peca-erro" role="alert" hidden>Escolha um tamanho para continuar.</p>
+        <div class="produto-acoes">
+          <button class="btn btn-escuro" type="submit"><svg aria-hidden="true"><use href="#i-sacola"/></svg>Adicionar à sacola</button>
+          <a class="btn btn-linha" id="peca-duvida" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Tirar dúvida</a>
+        </div>
+        <ul class="vantagens">
+          <li><svg aria-hidden="true"><use href="#i-caixa"/></svg><span><strong>Enviamos para todo o Brasil</strong>Calcule o frete pelo CEP ao finalizar a compra.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Retire na loja</strong>Rua XV de Novembro, 129, Centro, Cravinhos.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-cartao"/></svg><span><strong>Pix ou cartão em até 3x</strong>Escolha a forma de pagamento ao finalizar a compra.</span></li>
+        </ul>
+        <div class="detalhes">
+          <details open><summary>Descrição</summary><p>${esc(p.desc)}</p></details>
+        </div>
+      </form>
+    </div>
+    <section class="relacionadas" aria-labelledby="titulo-relacionadas">
+      <h2 id="titulo-relacionadas">Você também pode gostar</h2>
+      <ul class="vitrine">${relacionadas(p).map(cartao).join("")}
+      </ul>
+    </section>
+    <div class="barra-compra">
+      <p>${preco}</p>
+      <button class="btn btn-escuro" type="submit" form="peca-form">Adicionar à sacola</button>
+    </div>`;
+  trocarCor();
+  if (p.tamanhos) desenharResultado();
 }
-$("#ficha-cores-op").addEventListener("change", trocarFoto);
-function fecharFicha() { ficha.close(); voltarFoco?.focus(); }
-ficha.addEventListener("click", e => {
-  if (e.target === ficha) return fecharFicha();
-  const f = e.target.closest("[data-fechar]");
-  if (f) { if (f.tagName === "A") { ficha.close(); } else { e.preventDefault(); fecharFicha(); } }
+function corAtual() { const r = paginaPeca.querySelector('input[name="cor"]:checked'); return atual.cores[r ? +r.value : 0]; }
+// Cada cor pode ter várias fotos (fotos: ["nome-1", "nome-2"]); sem a lista, vale a foto da cor.
+function trocarCor() {
+  const c = corAtual(), daCor = c.fotos || [c.foto], fotos = atual.tabela ? [...daCor, atual.tabela] : daCor, varias = fotos.length > 1;
+  const altFoto = (f, i) => f === atual.tabela ? `Tabela de medidas do ${atual.nome}, em centímetros` : `${atual.nome}, cor ${c.nome}${daCor.length > 1 ? `, foto ${i + 1}` : ""}`;
+  $("#peca-cor").textContent = c.nome;
+  $("#peca-duvida").href = zap(`Olá! Tenho uma dúvida sobre a peça ${atual.nome} (cor ${c.nome}).`);
+  const g = $("#galeria");
+  g.classList.toggle("uma", !varias);
+  g.innerHTML = `
+    ${varias ? `<div class="galeria-mini">${fotos.map((f, i) => `<button type="button" data-foto="${i}" aria-label="${f === atual.tabela ? "Ver a tabela de medidas" : `Ver foto ${i + 1} de ${fotos.length}`}" aria-current="${i === 0}"><img src="${foto(f)}" width="76" height="101" alt=""></button>`).join("")}</div>` : ""}
+    <div class="galeria-palco">
+      <ul class="galeria-trilho">${fotos.map((f, i) => `<li><img src="${foto(f)}" width="750" height="1000" alt="${esc(altFoto(f, i))}"${i ? ' loading="lazy"' : ""}></li>`).join("")}</ul>
+      ${varias ? `<span class="galeria-conta" aria-hidden="true">1/${fotos.length}</span>` : ""}
+    </div>`;
+}
+paginaPeca.addEventListener("input", e => {
+  if (!e.target.matches(".medida input")) return;
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
+  medidas[e.target.name] = e.target.value;
+  gravar("siss-medidas", medidas);
+  desenharResultado();
 });
-ficha.addEventListener("cancel", e => { e.preventDefault(); fecharFicha(); });
-$("#ficha-form").addEventListener("submit", e => {
+// Enter num campo de medida não adiciona a peça à sacola
+paginaPeca.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.matches(".medida input")) e.preventDefault(); });
+paginaPeca.addEventListener("change", e => {
+  if (e.target.name === "cor") trocarCor();
+  if (e.target.name === "tam") $("#peca-erro").hidden = true;
+});
+paginaPeca.addEventListener("click", e => {
+  const b = e.target.closest("[data-foto]");
+  if (b) { const t = $(".galeria-trilho", paginaPeca); t.scrollTo({ left: +b.dataset.foto * t.clientWidth }); }
+  // a tabela de medidas é a última imagem da galeria
+  if (e.target.closest("[data-ver-tabela]")) {
+    const t = $(".galeria-trilho", paginaPeca);
+    t.scrollTo({ left: (t.children.length - 1) * t.clientWidth });
+    if ($("#galeria").getBoundingClientRect().top < 0) $("#galeria").scrollIntoView({ block: "start" });
+  }
+});
+paginaPeca.addEventListener("scroll", e => {
+  if (!e.target.matches?.(".galeria-trilho")) return;
+  const t = e.target, i = Math.round(t.scrollLeft / t.clientWidth), n = t.children.length;
+  const conta = $(".galeria-conta", paginaPeca);
+  if (conta) conta.textContent = `${i + 1}/${n}`;
+  paginaPeca.querySelectorAll("[data-foto]").forEach(b => b.setAttribute("aria-current", String(+b.dataset.foto === i)));
+}, true);
+paginaPeca.addEventListener("submit", e => {
   e.preventDefault();
-  const t = ficha.querySelector('input[name="tam"]:checked');
-  if (!t) { $("#ficha-erro").hidden = false; $("#ficha-tam-op input")?.focus(); return; }
-  adicionar(atual.id, ficha.querySelector('input[name="cor"]:checked')?.value || 0, t.value);
-  ficha.close();
+  const t = paginaPeca.querySelector('input[name="tam"]:checked');
+  if (!t) {
+    $("#peca-erro").hidden = false;
+    $("#peca-tams").scrollIntoView({ block: "center" });
+    $("#peca-tams input").focus({ preventScroll: true });
+    return;
+  }
+  adicionar(atual.id, paginaPeca.querySelector('input[name="cor"]:checked')?.value || 0, t.value);
   abrirSacola();
+});
+function abrirPeca(id, { empurrar = true } = {}) {
+  const p = PECAS.find(x => x.id === id);
+  if (!p) return mostrarInicio({ empurrar: false });
+  if (!inicio.hidden) rolagemInicio = scrollY;
+  atual = p;
+  if (empurrar) history.pushState(null, "", "?peca=" + encodeURIComponent(p.id));
+  desenharPeca(p);
+  inicio.hidden = true;
+  paginaPeca.hidden = false;
+  document.documentElement.dataset.vista = "produto";
+  document.title = `${p.nome} | SISS Store`;
+  scrollTo({ top: 0, behavior: "instant" });
+  $("#peca-nome").focus({ preventScroll: true });
+  revelar(paginaPeca);
+}
+function mostrarInicio({ empurrar = true, ancora = "" } = {}) {
+  if (empurrar) history.pushState(null, "", location.pathname + ancora);
+  paginaPeca.hidden = true;
+  inicio.hidden = false;
+  delete document.documentElement.dataset.vista;
+  document.title = TITULO;
+  atualizarSetas();
+  const alvo = ancora && ancora !== "#inicio" ? document.querySelector(ancora) : null;
+  if (alvo) alvo.scrollIntoView({ behavior: "instant" });
+  else scrollTo({ top: ancora === "#inicio" ? 0 : rolagemInicio, behavior: "instant" });
+}
+addEventListener("popstate", () => {
+  const id = new URLSearchParams(location.search).get("peca");
+  if (id) abrirPeca(id, { empurrar: false });
+  else if (!paginaPeca.hidden) mostrarInicio({ empurrar: false, ancora: location.hash });
+});
+// Links das peças abrem a página sem recarregar; os links do menu (#colecao...) voltam para o início.
+document.addEventListener("click", e => {
+  if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  const a = e.target.closest("a[href]");
+  if (!a) return;
+  const href = a.getAttribute("href");
+  if (href.startsWith("?peca=")) { e.preventDefault(); abrirPeca(new URLSearchParams(href).get("peca")); }
+  else if (href.startsWith("#") && href.length > 1 && !paginaPeca.hidden) {
+    e.preventDefault();
+    if (a.dataset.categoria) filtrar(a.dataset.categoria);
+    mostrarInicio({ ancora: href });
+  }
 });
 
 /* sacola */
@@ -1296,7 +1450,7 @@ checkout.addEventListener("click", async e => {
 checkout.addEventListener("cancel", e => { e.preventDefault(); fecharCk(); });
 desktop.addEventListener("change", () => { if (checkout.open) desenharResumo(); });
 
-/* tamanho */
+/* tamanho: a cliente informa as medidas na página da peça e já vê o tamanho */
 // Tabela de referência do mercado (faixas de 4 cm, base ABNT), usada só na demonstração.
 // Na loja de verdade, trocar pelos números da tabela de medidas da própria loja.
 // Cada linha: numeração, letra, e o maior valor de busto, cintura e quadril daquele tamanho.
@@ -1305,14 +1459,25 @@ const TABELA = [
   ["44", "M", 101, 82, 110], ["46", "G", 105, 86, 114], ["48", "G", 110, 91, 119], ["50", "GG", 115, 96, 124],
 ];
 const MENORES = [76, 57, 85]; // início da faixa do 34
-const MEDIDAS = [["o busto", "#m-busto", 60, 170], ["a cintura", "#m-cintura", 45, 160], ["o quadril", "#m-quadril", 65, 180]];
+const MEDIDAS = [["o busto", "busto", 60, 170], ["a cintura", "cintura", 45, 160], ["o quadril", "quadril", 65, 180]];
 const por = nome => (nome[0] === "a" ? "Pela " : "Pelo ") + nome.slice(2), de = nome => (nome[0] === "a" ? "da " : "do ") + nome.slice(2);
-const medidaEstranha = () => MEDIDAS.find(([, sel, min, max]) => { const v = +$(sel).value; return v && (v < min || v > max); });
-const selPeca = $("#m-peca");
-PECAS.forEach(p => selPeca.insertAdjacentHTML("beforeend", `<option value="${p.id}">${esc(p.nome)}</option>`));
+// As medidas ficam guardadas no aparelho: a cliente não digita de novo em outra peça.
+const medidas = ler("siss-medidas", {});
+const medidaEstranha = () => MEDIDAS.find(([, chave, min, max]) => { const v = +medidas[chave]; return v && (v < min || v > max); });
+const achadorTamanho = () => `
+        <details class="achar-tam"${MEDIDAS.some(([, k]) => medidas[k]) ? " open" : ""}>
+          <summary>Não sabe o seu tamanho? Descubra com as suas medidas</summary>
+          <div class="achar-corpo">
+            <div class="tres">${MEDIDAS.map(([nome, chave]) => `
+              <label class="campo medida"><span>${nome[2].toUpperCase() + nome.slice(3)}</span><input name="${chave}" inputmode="numeric" maxlength="3" autocomplete="off" value="${esc(medidas[chave] || "")}"><em>cm</em></label>`).join("")}
+            </div>
+            <p class="achar-dica">Com a fita métrica: busto na parte mais cheia, cintura na parte mais fina e quadril na parte mais larga.</p>
+            <div class="res-tam" id="res-tam" aria-live="polite"></div>
+          </div>
+        </details>`;
 function calcularTamanho() {
-  const lidas = MEDIDAS.map(([nome, sel, min, max], i) => {
-    const v = +$(sel).value;
+  const lidas = MEDIDAS.map(([nome, chave, min, max], i) => {
+    const v = +medidas[chave];
     if (!v || v < min || v > max) return null;
     const pos = v < MENORES[i] ? -1 : TABELA.findIndex(l => v <= l[i + 2]);
     return { nome, v, pos: pos === -1 && v >= MENORES[i] ? TABELA.length : pos };
@@ -1322,9 +1487,10 @@ function calcularTamanho() {
   const maior = lidas.reduce((a, b) => (b.pos > a.pos ? b : a));
   return { lidas, maior, linha: TABELA[maior.pos] || null, mesmas: lidas.every(l => l.pos === maior.pos) };
 }
-function pecaEscolhida() { return PECAS.find(p => p.id === selPeca.value) || null; }
 function desenharResultado() {
-  const r = calcularTamanho(), p = pecaEscolhida(), caixa = $("#res-tam"), estranha = medidaEstranha();
+  const caixa = $("#res-tam");
+  if (!caixa) return;
+  const r = calcularTamanho(), estranha = medidaEstranha(), grade = atual.tamanhos;
   if (estranha) { caixa.innerHTML = `<div class="res-txt"><strong>Confira a medida ${de(estranha[0])}</strong><p>Use centímetros, medidos com a fita métrica.</p></div>`; return; }
   if (!r) { caixa.innerHTML = `<p class="res-vazio">Preencha pelo menos uma medida para ver o tamanho indicado.</p>`; return; }
   if (!r.linha) {
@@ -1333,46 +1499,21 @@ function desenharResultado() {
     return;
   }
   const [num, letra] = r.linha;
+  const tam = grade.includes(num) ? num : grade.includes(letra) ? letra : null;
+  if (!tam) {
+    caixa.innerHTML = `<div class="res-selo" aria-hidden="true"><b>${num}</b><span>${letra}</span></div>
+      <div class="res-txt"><strong>Seu tamanho é o ${num} (${letra})</strong><p>Esta peça vai do ${grade[0]} ao ${grade[grade.length - 1]}. Fale com a nossa equipe: indicamos as peças no seu tamanho.</p></div>`;
+    return;
+  }
   const motivo = r.mesmas
     ? (r.lidas.length > 1 ? "Suas medidas batem com esse tamanho." : `Pela medida ${de(r.maior.nome)}.`)
-    : `${por(r.maior.nome)}, que é a sua maior medida na tabela.`;
-  let linhaPeca = "";
-  if (p) {
-    const grade = p.tamanhos;
-    const tem = grade && (grade.includes(num) || grade.includes(letra));
-    linhaPeca = !grade ? `${esc(p.nome)}: a nossa equipe confirma os tamanhos.`
-      : tem ? `${esc(p.nome)}: tamanho ${grade.includes(num) ? num : letra} disponível.`
-      : `${esc(p.nome)} vai do ${grade[0]} ao ${grade[grade.length - 1]}. Fale com a nossa equipe sobre o seu tamanho.`;
-  }
-  caixa.innerHTML = `<div class="res-selo" aria-hidden="true"><b>${num}</b><span>${letra}</span></div>
-    <div class="res-txt"><strong>Tamanho indicado: ${num} (${letra})</strong><p>${motivo}</p>${linhaPeca ? `<p class="res-peca">${linhaPeca}</p>` : ""}</div>`;
+    : `${por(r.maior.nome)}, que é a sua maior medida.`;
+  // já deixa o tamanho marcado, como nas lojas grandes
+  const opcao = paginaPeca.querySelector(`input[name="tam"][value="${tam}"]`);
+  if (opcao) { opcao.checked = true; $("#peca-erro").hidden = true; }
+  caixa.innerHTML = `<div class="res-selo" aria-hidden="true"><b>${tam}</b><span>${tam === num ? letra : num}</span></div>
+    <div class="res-txt"><strong>Tamanho indicado: ${tam}</strong><p>${motivo} Já marcamos o ${tam} para você.</p></div>`;
 }
-const formTam = $("#form-tam");
-formTam.addEventListener("input", e => {
-  if (e.target.matches(".medida input")) e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
-  desenharResultado();
-});
-formTam.addEventListener("change", desenharResultado);
-formTam.addEventListener("submit", e => e.preventDefault()); // o Enter não recarrega a página
-desenharResultado();
-
-/* fita métrica */
-let larguraFita = 0;
-function desenharFita() {
-  const fita = $("#fita"), w = Math.round(fita.getBoundingClientRect().width);
-  if (!w || w === larguraFita) return;
-  larguraFita = w;
-  fita.setAttribute("viewBox", `0 0 ${w} 46`);
-  let s = `<rect width="${w}" height="46" fill="#EFE4DC"/>`;
-  for (let i = 0; i * 5 <= w; i++) {
-    const x = i * 5, alto = i % 10 === 0 ? 22 : i % 5 === 0 ? 15 : 8;
-    s += `<line x1="${x}" y1="0" x2="${x}" y2="${alto}" stroke="#7A5442" stroke-width="1.2"/>`;
-    if (i % 10 === 0 && i) s += `<text x="${x}" y="38" font-size="11" text-anchor="middle" fill="#7A5442" font-family="Jost, Arial, sans-serif">${i / 2}</text>`;
-  }
-  fita.innerHTML = s;
-}
-desenharFita();
-addEventListener("resize", desenharFita);
 
 /* mapa */
 $("#mapa-capa").addEventListener("click", () => {
@@ -1419,9 +1560,12 @@ function revelar(raiz = document) {
   });
 }
 
+desenharCategorias();
 desenharVitrine();
 contar();
 revelar();
+const pecaNaUrl = new URLSearchParams(location.search).get("peca");
+if (pecaNaUrl) abrirPeca(pecaNaUrl, { empurrar: false });
 </script>
 </body>
 </html>
