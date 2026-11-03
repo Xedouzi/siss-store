@@ -49,17 +49,17 @@
   --texto: #2E2522;
   --suave: #6B5C56;
   --linha: #E3D6CD;
-  --zap: #179A48;
+  --zap: #12803B;
   --raio: 14px;
   --titulo: "Marcellus", "Marcellus reserva", Georgia, serif;
   --corpo: "Jost", "Jost reserva", Arial, sans-serif;
-  --larg: 1240px;
+  --larg: 1440px;
 }
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: #fff; color: var(--texto); font: 400 1.0625rem/1.6 var(--corpo); }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { margin: 0; overflow-x: clip; background: #fff; color: var(--texto); font: 400 1.0625rem/1.6 var(--corpo); }
 img { max-width: 100%; height: auto; display: block; }
-h1, h2, h3 { font-family: var(--titulo); font-weight: 400; line-height: 1.15; margin: 0; letter-spacing: .01em; }
+h1, h2, h3 { font-family: var(--titulo); font-weight: 400; line-height: 1.15; margin: 0; letter-spacing: .01em; text-wrap: balance; }
 p { margin: 0; }
 a { color: var(--bronze); }
 button, input, select, textarea { font: inherit; color: inherit; }
@@ -96,7 +96,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .sacola-botao svg { width: 20px; height: 20px; }
 .sacola-botao .conta { min-width: 1.5rem; height: 1.5rem; padding: 0 .35rem; border-radius: 999px; background: var(--cacau); color: #fff; font-size: .8rem; display: inline-grid; place-items: center; }
 .sacola-botao .conta[data-zero] { background: var(--rose); color: var(--cacau); }
-#menu-botao { display: none; width: 52px; height: 52px; border: 0; background: none; border-radius: 12px; cursor: pointer; padding: 0; position: relative; }
+#menu-botao { display: none; flex: none; width: 52px; height: 52px; border: 0; background: none; border-radius: 12px; cursor: pointer; padding: 0; position: relative; }
 #menu-botao span { position: absolute; left: 14px; width: 24px; height: 2px; background: var(--cacau); transition: transform .22s, opacity .22s; }
 #menu-botao span:nth-child(1) { top: 18px; }
 #menu-botao span:nth-child(2) { top: 25px; }
@@ -144,7 +144,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .fatos li { display: flex; align-items: center; justify-content: center; text-align: center; gap: .7rem; color: var(--suave); }
 .fatos li strong { color: var(--texto); font-weight: 500; }
 .fatos svg { width: 26px; height: 26px; flex: none; color: var(--bronze); }
-.fatos a { color: inherit; text-decoration-color: var(--linha); text-underline-offset: 3px; }
+.fatos a { display: inline-flex; align-items: center; min-height: 44px; color: inherit; text-decoration-color: var(--linha); text-underline-offset: 3px; }
 
 /* seções */
 .secao { padding: clamp(3.5rem, 7vw, 6rem) 0; }
@@ -164,9 +164,22 @@ main section[id] { scroll-margin-top: 84px; }
 
 /* fileiras da vitrine */
 .fileiras { display: grid; gap: 3.2rem; }
-.fileira-cabeca { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.2rem; }
-.fileira-cabeca h3 { font-size: 1.75rem; }
-.fileira-cabeca small { font-family: var(--corpo); font-size: .95rem; color: var(--suave); margin-left: .2rem; letter-spacing: 0; }
+/* capa da fileira: no celular e no tablet e so o titulo; no computador vira um painel ao lado das pecas */
+.fileira-capa { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .8rem; margin-bottom: 1.2rem; }
+.fileira-capa h3 { font-size: 1.75rem; }
+.capa-texto, .capa-galho { display: none; }
+.capa-conta { color: var(--suave); font-size: .95rem; }
+.fileira-capa .setas { margin-left: auto; align-self: center; }
+@media (min-width: 1101px) {
+  .fileira { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 1.25rem; }
+  .fileira-capa { position: relative; flex-direction: column; flex-wrap: nowrap; align-items: flex-start; justify-content: flex-end; gap: .55rem; margin: .3rem 0 .4rem; padding: 5.5rem 1.8rem 1.8rem; border-radius: var(--raio); background: var(--nevoa); }
+  .fileira:nth-child(even) .fileira-capa { background: var(--rose); }
+  .capa-galho { display: block; top: 1.6rem; left: 1.2rem; width: 170px; }
+  .fileira-capa h3 { font-size: clamp(1.9rem, 2.3vw, 2.3rem); line-height: 1.15; }
+  .capa-texto { display: block; max-width: 22rem; color: var(--suave); line-height: 1.55; }
+  .fileira-capa .setas { margin: .9rem 0 0; align-self: flex-start; }
+  .fileira .vitrine { grid-auto-columns: calc((100% - 2 * 1.25rem) / 3); }
+}
 .setas { display: flex; gap: .5rem; flex: none; }
 .setas[hidden] { display: none; }
 .setas button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--linha); background: #fff; color: var(--cacau); display: grid; place-items: center; cursor: pointer; transition: border-color .25s, background-color .25s, opacity .25s; }
@@ -190,7 +203,7 @@ main section[id] { scroll-margin-top: 84px; }
 .cores-mini span { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(0,0,0,.15); }
 
 .peca h4 a { color: inherit; text-decoration: none; }
-.fileira-cabeca h3 { scroll-margin-top: 100px; }
+.fileira-capa h3 { scroll-margin-top: 100px; }
 
 dialog { border: 0; padding: 0; color: var(--texto); background: #fff; }
 dialog::backdrop { background: rgba(38,30,27,.55); }
@@ -202,7 +215,7 @@ dialog::backdrop { background: rgba(38,30,27,.55); }
 .trilha a { color: var(--suave); text-decoration: none; display: inline-block; padding-block: .3rem; }
 .trilha a:hover { color: var(--bronze); text-decoration: underline; }
 .produto-grade { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3.5rem; align-items: start; }
-.galeria { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 1rem; min-width: 0; }
+.galeria { position: sticky; top: 108px; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 1rem; min-width: 0; }
 .galeria.uma { grid-template-columns: minmax(0, 1fr); }
 .galeria-mini { display: grid; gap: .6rem; align-content: start; }
 .galeria-mini button { display: block; padding: 0; border: 1px solid var(--linha); border-radius: 10px; overflow: hidden; background: var(--rose); cursor: pointer; }
@@ -214,7 +227,7 @@ dialog::backdrop { background: rgba(38,30,27,.55); }
 .galeria-trilho li { flex: 0 0 100%; scroll-snap-align: start; }
 .galeria-trilho img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .galeria-conta { position: absolute; right: .8rem; top: .8rem; background: rgba(255,255,255,.92); color: var(--cacau); border-radius: 999px; padding: .1rem .7rem; font-size: .85rem; }
-.produto-info { position: sticky; top: 108px; display: flex; flex-direction: column; gap: 1.3rem; min-width: 0; }
+.produto-info { display: flex; flex-direction: column; gap: 1.3rem; min-width: 0; }
 .produto-info h1 { font-size: clamp(1.9rem, 3vw, 2.5rem); }
 .produto-info h1:focus { outline: none; }
 .selo-txt { align-self: flex-start; background: var(--rose); color: var(--cacau); font-size: .85rem; padding: .2rem .8rem; border-radius: 999px; margin-bottom: -.5rem; }
@@ -230,6 +243,33 @@ legend b { font-weight: 400; color: var(--suave); }
 .amostras input:focus-visible + img { outline: 3px solid var(--flor); outline-offset: 3px; }
 .produto-acoes { display: flex; flex-wrap: wrap; gap: .7rem; }
 .produto-acoes .btn { flex: 1 1 14rem; }
+.peca-nota { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .3rem .6rem; align-self: flex-start; margin-top: -.6rem; min-height: 44px; color: var(--suave); font-size: .95rem; text-decoration: none; }
+.peca-nota b { color: var(--texto); font-weight: 500; }
+.peca-nota .estrelas svg { width: 16px; height: 16px; }
+@media (hover: hover) { .peca-nota:hover span:last-child { text-decoration: underline; text-underline-offset: 3px; } }
+.frete { display: grid; gap: .5rem; padding: 1.1rem 1.2rem 1.2rem; border-radius: var(--raio); background: var(--nevoa); }
+.frete label { font-weight: 500; }
+.frete-linha { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .6rem; }
+.frete-linha input { min-width: 0; min-height: 48px; padding: 0 1rem; border: 1px solid var(--linha); border-radius: 999px; background: #fff; font: inherit; color: var(--texto); }
+.frete-linha input:focus { outline: none; border-color: var(--cacau); }
+.frete-linha .btn { min-height: 48px; padding-inline: 1.4rem; }
+.frete-nao-sei { display: inline-flex; align-items: center; min-height: 44px; margin-block: -.5rem; justify-self: start; color: var(--bronze); font-size: .9rem; text-underline-offset: 3px; }
+.frete-res:empty { display: none; }
+.frete-res p { color: var(--suave); font-size: .95rem; }
+.frete-res .frete-erro { color: #A3231B; }
+.frete-local { display: flex; align-items: center; gap: .45rem; }
+.frete-local svg { width: 18px; height: 18px; color: var(--bronze); flex: none; }
+.frete-lista { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; }
+.frete-lista li { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .7rem 0; border-top: 1px solid var(--linha); font-size: .95rem; color: var(--suave); }
+.frete-lista strong { display: block; color: var(--texto); font-weight: 500; }
+.frete-lista b { color: var(--texto); font-weight: 500; white-space: nowrap; }
+.galeria-trilho li { overflow: hidden; }
+@media (hover: hover) and (min-width: 761px) {
+  .galeria-palco { cursor: zoom-in; }
+  .galeria-trilho img { transition: transform .25s ease-out; }
+  .galeria-palco.zoom .galeria-trilho img { transform: scale(2); transform-origin: var(--zx, 50%) var(--zy, 50%); }
+}
+@media (prefers-reduced-motion: reduce) { .galeria-trilho img { transition: none; } }
 .vantagens { list-style: none; margin: 0; padding: 1.1rem 1.2rem; border: 1px solid var(--linha); border-radius: var(--raio); display: grid; gap: .9rem; }
 .vantagens li { display: flex; gap: .8rem; align-items: flex-start; font-size: .95rem; color: var(--suave); }
 .vantagens svg { width: 22px; height: 22px; color: var(--bronze); flex: none; margin-top: .15rem; }
@@ -322,9 +362,10 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 .loja-fotos img:nth-child(2) { bottom: 0; right: 0; }
 .loja-texto h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin-bottom: 1rem; }
 .loja-texto > p { color: var(--suave); max-width: 34rem; }
-.loja-dados { list-style: none; margin: 1.6rem 0; padding: 0; display: grid; gap: .8rem; }
-.loja-dados li { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: .8rem; }
-.loja-dados svg { width: 24px; height: 24px; color: var(--bronze); margin-top: .1rem; }
+.loja-dados { list-style: none; margin: 1.6rem 0; padding: 0; display: grid; gap: .2rem; }
+.loja-dados li { display: grid; grid-template-columns: 26px minmax(0, 1fr); align-items: center; gap: .8rem; min-height: 44px; }
+.loja-dados a { display: inline-flex; align-items: center; min-height: 44px; }
+.loja-dados svg { width: 24px; height: 24px; color: var(--bronze); }
 .mapa { position: relative; border-radius: var(--raio); overflow: hidden; height: 240px; background: #EDE6E0; border: 1px solid var(--linha); }
 .mapa-capa { position: absolute; inset: 0; width: 100%; border: 0; cursor: pointer; background:
   linear-gradient(90deg, transparent 47%, #fff 47%, #fff 53%, transparent 53%) 0 0 / 160px 100%,
@@ -337,15 +378,22 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 /* avaliações */
 .avaliacoes-grade { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 2fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 .nota h2 { font-size: clamp(2rem, 3.6vw, 2.8rem); margin-bottom: 1rem; }
-.nota-numero { font-family: var(--titulo); font-size: clamp(4rem, 8vw, 5.6rem); line-height: 1; color: var(--bronze); }
+.nota-numero { font-variant-numeric: tabular-nums; font-family: var(--titulo); font-size: clamp(4rem, 8vw, 5.6rem); line-height: 1; color: var(--bronze); }
 .nota-texto { color: var(--suave); margin: .6rem 0 1.4rem; max-width: 18rem; }
 .estrelas { display: inline-flex; gap: .2rem; color: #A8742E; }
 .estrelas svg { width: 20px; height: 20px; }
 .depoimentos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; }
-.depoimentos li { background: #fff; border: 1px solid var(--linha); border-radius: var(--raio); padding: 1.5rem; display: flex; flex-direction: column; gap: .9rem; min-width: 0; }
+.depoimentos li { background: #fff; border: 1px solid var(--linha); border-radius: var(--raio); padding: 1.4rem 1.5rem 1.6rem; display: flex; flex-direction: column; gap: .8rem; min-width: 0; }
+.nota-google { display: inline-flex; align-items: center; gap: .45rem; margin-bottom: .4rem; color: var(--suave); font-size: .95rem; }
+.nota-google .g-logo { width: 20px; height: 20px; }
+.dep-autora { display: grid; grid-template-columns: 40px minmax(0, 1fr) 18px; align-items: center; gap: .75rem; }
+.dep-avatar { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--av); color: #fff; font-size: 1.05rem; font-weight: 500; }
+.dep-autora p { min-width: 0; line-height: 1.3; }
+.dep-autora strong { display: block; font-weight: 500; }
+.dep-autora p span { color: var(--suave); font-size: .88rem; }
+.dep-autora .g-logo { width: 18px; height: 18px; align-self: start; }
 .depoimentos .estrelas svg { width: 16px; height: 16px; }
-.depoimentos blockquote { margin: 0; font-family: var(--titulo); font-size: 1.2rem; line-height: 1.45; flex: 1; }
-.autora { color: var(--suave); font-size: .95rem; }
+.depoimentos blockquote { margin: 0; font-family: var(--titulo); font-size: 1.12rem; line-height: 1.5; flex: 1; }
 .ramo-divisor { position: static; display: block; width: 200px; margin: 0 0 1.6rem -6px; }
 
 /* rodapé */
@@ -508,7 +556,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .categorias { gap: .8rem; margin: 0 -1.25rem 2rem; padding-inline: 1.25rem; }
   .categorias button { width: 84px; font-size: .85rem; gap: .45rem; }
   .categorias img { width: 76px; height: 76px; }
-  .fileira-cabeca h3 { font-size: 1.45rem; }
+  .fileira-capa h3 { font-size: 1.45rem; }
   .setas { display: none; }
   .produto { padding: .6rem 0 7rem; }
   .trilha { margin-bottom: .8rem; }
@@ -517,7 +565,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
   .galeria-mini { display: none; }
   .galeria-palco { border-radius: 0; }
   .galeria-trilho img { aspect-ratio: 4 / 5; }
-  .produto-info { position: static; }
+  .galeria { position: static; }
   .produto-acoes .btn-escuro { display: none; }
   .relacionadas { margin-top: 3rem; }
   .relacionadas h2 { font-size: 1.45rem; }
@@ -630,7 +678,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 
 <header class="topo">
   <div class="envelope topo-in">
-    <a class="marca" href="#inicio" aria-label="SISS Store, início"><b>SISS</b><small>STORE</small></a>
+    <a class="marca" href="#inicio" aria-label="SISS Store, início"><b>SISS</b> <small>STORE</small></a>
     <nav class="menu" id="menu" aria-label="Principal">
       <a href="#colecao">Coleção</a>
       <a href="#loja">A loja</a>
@@ -669,7 +717,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
       <div class="envelope">
         <div>
           <h1 id="titulo-abertura"><span>Moda que floresce</span> <span>em todos os tamanhos</span></h1>
-          <p>Do P ao GG e do 44 ao 50, com peças escolhidas uma a uma para a nossa loja em Cravinhos. Pague pelo Pix ou cartão e receba em qualquer lugar do Brasil.</p>
+          <p>Do P ao GG e do 44 ao 50, peças escolhidas uma a uma para a nossa loja em Cravinhos. Enviamos para todo o Brasil.</p>
           <div class="botoes">
             <a class="btn btn-claro" href="#colecao">Ver a coleção</a>
             <a class="btn btn-vidro" href="https://wa.me/5516974064343?text=Ol%C3%A1!%20Vim%20pelo%20site%20da%20SISS%20Store." target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Falar no WhatsApp</a>
@@ -681,7 +729,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 
   <div class="fatos">
     <ul class="envelope">
-      <li><svg aria-hidden="true"><use href="#i-estrela"/></svg><a href="https://www.google.com/maps/search/?api=1&amp;query=Siss+Store+Rua+15+de+Novembro+129+Cravinhos" target="_blank" rel="noopener"><span><strong>4,9 no Google</strong>, com 55 avaliações</span></a></li>
+      <li><svg aria-hidden="true"><use href="#i-estrela"/></svg><a href="https://www.google.com/maps?cid=7074911046580898358" target="_blank" rel="noopener"><span><strong>4,9 no Google</strong>, com 55 avaliações</span></a></li>
       <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Rua XV de Novembro, 129</strong>, Centro, Cravinhos/SP</span></li>
       <li><svg aria-hidden="true"><use href="#i-caixa"/></svg><span><strong>Enviamos para todo o Brasil</strong></span></li>
     </ul>
@@ -706,7 +754,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
         <p>Estamos no Centro de Cravinhos, na Rua XV de Novembro. Venha provar as peças com calma ou fale com a nossa equipe pelo WhatsApp e pelo Direct.</p>
         <ul class="loja-dados">
           <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span>Rua XV de Novembro, 129, Centro, Cravinhos/SP, 14140-000</span></li>
-          <li><svg aria-hidden="true"><use href="#i-relogio"/></svg><span><a href="https://www.google.com/maps/search/?api=1&amp;query=Siss+Store+Rua+15+de+Novembro+129+Cravinhos" target="_blank" rel="noopener">Consultar o horário de hoje no Google</a></span></li>
+          <li><svg aria-hidden="true"><use href="#i-relogio"/></svg><span><a href="https://www.google.com/maps?cid=7074911046580898358" target="_blank" rel="noopener">Consultar o horário de hoje no Google</a></span></li>
           <li><svg aria-hidden="true"><use href="#i-zap"/></svg><span><a href="https://wa.me/5516974064343" target="_blank" rel="noopener">(16) 97406-4343</a></span></li>
           <li><svg aria-hidden="true"><use href="#i-insta"/></svg><span><a href="https://www.instagram.com/_sissstore/" target="_blank" rel="noopener">@_sissstore</a></span></li>
         </ul>
@@ -727,27 +775,28 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
       </svg>
       <div class="avaliacoes-grade">
         <div class="nota">
+          <p class="nota-google"><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.5-3.8-12.2-9H4.5v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.8 28.3a13.2 13.2 0 0 1 0-8.6v-5.7H4.5a22 22 0 0 0 0 20z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.5 14l7.3 5.7c1.7-5.2 6.5-9 12.2-9z"/></svg>Google</p>
           <h2 id="titulo-avaliacoes">Avaliações</h2>
           <p class="nota-numero">4,9</p>
           <span class="estrelas" role="img" aria-label="Nota 4,9 de 5"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
           <p class="nota-texto">55 avaliações no Google, 53 delas com 5 estrelas.</p>
-          <a class="btn btn-linha" href="https://www.google.com/maps/search/?api=1&amp;query=Siss+Store+Rua+15+de+Novembro+129+Cravinhos" target="_blank" rel="noopener">Ver todas no Google</a>
+          <a class="btn btn-linha" href="https://www.google.com/maps?cid=7074911046580898358" target="_blank" rel="noopener">Ver todas no Google</a>
         </div>
         <ul class="depoimentos">
           <li>
+            <div class="dep-autora"><span class="dep-avatar" style="--av:#7B1FA2" aria-hidden="true">C</span><p><strong>Cris S.</strong><span>2024</span></p><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.5-3.8-12.2-9H4.5v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.8 28.3a13.2 13.2 0 0 1 0-8.6v-5.7H4.5a22 22 0 0 0 0 20z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.5 14l7.3 5.7c1.7-5.2 6.5-9 12.2-9z"/></svg></div>
             <span class="estrelas" role="img" aria-label="5 de 5 estrelas"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
-            <blockquote>“Eu simplesmente amo essa loja! […] entende e valoriza todos os tipos de corpos.”</blockquote>
-            <p class="autora">Cris S., no Google</p>
+            <blockquote>“Eu simplesmente amo essa loja! Como alguém que veste moda plus size, é um alívio encontrar uma loja que não só oferece uma grande variedade de roupas elegantes e modernas, mas também entende e valoriza todos os tipos de corpos.”</blockquote>
           </li>
           <li>
+            <div class="dep-autora"><span class="dep-avatar" style="--av:#0B8043" aria-hidden="true">P</span><p><strong>Patricia C.</strong><span>abril de 2026</span></p><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.5-3.8-12.2-9H4.5v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.8 28.3a13.2 13.2 0 0 1 0-8.6v-5.7H4.5a22 22 0 0 0 0 20z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.5 14l7.3 5.7c1.7-5.2 6.5-9 12.2-9z"/></svg></div>
             <span class="estrelas" role="img" aria-label="5 de 5 estrelas"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
-            <blockquote>“Peças de qualidade! Atendimento maravilhoso!”</blockquote>
-            <p class="autora">Patricia C., no Google</p>
+            <blockquote>“Peças de qualidade! Atendimento maravilhoso! As meninas são uma graça! Adoro as roupas, os acessórios…”</blockquote>
           </li>
           <li>
+            <div class="dep-autora"><span class="dep-avatar" style="--av:#C2185B" aria-hidden="true">J</span><p><strong>Juliana F.</strong><span>março de 2026</span></p><svg class="g-logo" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45.1 24.5c0-1.6-.1-3.1-.4-4.5H24v8.5h11.8a10 10 0 0 1-4.4 6.6v5.5h7.1c4.2-3.8 6.6-9.5 6.6-16.1z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-7.1-5.5c-2 1.3-4.5 2.1-7.4 2.1-5.7 0-10.5-3.8-12.2-9H4.5v5.7A22 22 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.8 28.3a13.2 13.2 0 0 1 0-8.6v-5.7H4.5a22 22 0 0 0 0 20z"/><path fill="#EA4335" d="M24 10.7c3.2 0 6.1 1.1 8.4 3.3l6.3-6.3A22 22 0 0 0 4.5 14l7.3 5.7c1.7-5.2 6.5-9 12.2-9z"/></svg></div>
             <span class="estrelas" role="img" aria-label="5 de 5 estrelas"><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg><svg aria-hidden="true"><use href="#i-estrela"/></svg></span>
-            <blockquote>“Loja maravilhosa peças lindas.”</blockquote>
-            <p class="autora">Juliana F., no Google</p>
+            <blockquote>“Loja maravilhosa, peças lindas. As atendentes são muito simpáticas.”</blockquote>
           </li>
         </ul>
       </div>
@@ -762,7 +811,7 @@ legend { font-weight: 500; margin-bottom: .55rem; padding: 0; }
 <footer class="rodape">
   <div class="envelope">
     <div class="rodape-grade">
-      <div><a class="marca" href="#inicio" aria-label="SISS Store, voltar ao início"><b>SISS</b><small>STORE</small></a></div>
+      <div><a class="marca" href="#inicio" aria-label="SISS Store, voltar ao início"><b>SISS</b> <small>STORE</small></a></div>
       <div><h2>Navegação</h2><ul><li><a href="#colecao">Coleção</a></li><li><a href="#loja">A loja</a></li><li><a href="#avaliacoes">Avaliações</a></li></ul></div>
       <div><h2>Atendimento</h2><ul><li><a href="https://wa.me/5516974064343" target="_blank" rel="noopener">WhatsApp (16) 97406-4343</a></li><li><a href="https://www.instagram.com/_sissstore/" target="_blank" rel="noopener">Instagram @_sissstore</a></li></ul></div>
       <div><h2>Endereço</h2><p>Rua XV de Novembro, 129<br>Centro, Cravinhos/SP<br>14140-000</p></div>
@@ -883,11 +932,21 @@ function filtrar(id) {
   desenharVitrine(id ? CATEGORIAS.filter(c => c.id === id) : FILEIRAS);
 }
 $("#categorias").addEventListener("click", e => { const b = e.target.closest("[data-categoria]"); if (b) filtrar(b.dataset.categoria); });
+// Texto da capa de cada fileira (no computador a capa fica ao lado das peças)
+const TEXTO_FILEIRA = {
+  fascinio: "Renda, bordado e peças leves, do dia a dia ao fim de semana.",
+  plus: "Conjuntos com modelagem pensada para vestir bem do 44 ao 50.",
+  promo: "Peças da nossa Coleção Promocional, com valor especial.",
+  conjuntos: "Partes que combinam entre si e rendem várias produções.",
+};
 function desenharVitrine(lista = FILEIRAS) {
   $("#fileiras").innerHTML = lista.map(f => `
     <section class="fileira" aria-labelledby="fileira-${f.id}">
-      <div class="fileira-cabeca">
-        <h3 id="fileira-${f.id}">${esc(f.nome)} <small>${f.pecas.length} ${f.pecas.length > 1 ? "peças" : "peça"}</small></h3>
+      <div class="fileira-capa">
+        <svg class="galho capa-galho" viewBox="0 0 200 50" aria-hidden="true"><path class="ramo" stroke-width="2.5" d="M4 32c40-10 80-14 120-8s50 4 72-6"/><use href="#flor" x="34" y="6" width="28" height="28"/><use href="#flor" x="102" y="18" width="24" height="24"/><use href="#flor" x="150" y="2" width="26" height="26"/></svg>
+        <h3 id="fileira-${f.id}">${esc(f.nome)}</h3>
+        ${TEXTO_FILEIRA[f.id] ? `<p class="capa-texto">${TEXTO_FILEIRA[f.id]}</p>` : ""}
+        <p class="capa-conta">${f.pecas.length} ${f.pecas.length > 1 ? "peças" : "peça"}</p>
         <div class="setas">
           <button type="button" data-rolar="-1" aria-label="Peças anteriores de ${esc(f.nome)}"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
           <button type="button" data-rolar="1" aria-label="Próximas peças de ${esc(f.nome)}"><svg aria-hidden="true"><use href="#i-seta"/></svg></button>
@@ -944,6 +1003,7 @@ function desenharPeca(p) {
       <form class="produto-info" id="peca-form" novalidate>
         ${p.selo ? `<p class="selo-txt">${esc(p.selo)}</p>` : ""}
         <h1 id="peca-nome" tabindex="-1">${esc(p.nome)}</h1>
+        <a class="peca-nota" href="#avaliacoes"><span class="estrelas" aria-hidden="true">${'<svg><use href="#i-estrela"/></svg>'.repeat(5)}</span><span><b>4,9</b> · 55 avaliações da loja no Google</span></a>
         <div class="preco-bloco">
           <p class="preco${p.preco ? "" : " consultar"}">${preco}</p>
           ${p.preco ? `<small>ou 3x de ${real(p.preco / 3)} no cartão</small>` : `<small>Confirmamos o valor pelo WhatsApp.</small>`}
@@ -965,8 +1025,17 @@ function desenharPeca(p) {
           <button class="btn btn-escuro" type="submit"><svg aria-hidden="true"><use href="#i-sacola"/></svg>Adicionar à sacola</button>
           <a class="btn btn-linha" id="peca-duvida" href="#" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-zap"/></svg>Tirar dúvida</a>
         </div>
+        <div class="frete">
+          <label for="frete-cep">Calcule o frete e o prazo</label>
+          <div class="frete-linha">
+            <input id="frete-cep" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" value="${esc(ck.cep)}">
+            <button class="btn btn-linha" type="button" id="frete-calcular">Calcular</button>
+          </div>
+          <a class="frete-nao-sei" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP</a>
+          <div class="frete-res" id="frete-res" aria-live="polite"></div>
+        </div>
         <ul class="vantagens">
-          <li><svg aria-hidden="true"><use href="#i-caixa"/></svg><span><strong>Enviamos para todo o Brasil</strong>Calcule o frete pelo CEP ao finalizar a compra.</span></li>
+          <li><svg aria-hidden="true"><use href="#i-caixa"/></svg><span><strong>Enviamos para todo o Brasil</strong>Pelos Correios, em PAC ou SEDEX, com código de rastreio.</span></li>
           <li><svg aria-hidden="true"><use href="#i-pin"/></svg><span><strong>Retire na loja</strong>Rua XV de Novembro, 129, Centro, Cravinhos.</span></li>
           <li><svg aria-hidden="true"><use href="#i-cartao"/></svg><span><strong>Pix ou cartão em até 3x</strong>Escolha a forma de pagamento ao finalizar a compra.</span></li>
         </ul>
@@ -1003,7 +1072,36 @@ function trocarCor() {
       ${varias ? `<span class="galeria-conta" aria-hidden="true">1/${fotos.length}</span>` : ""}
     </div>`;
 }
+/* frete na pagina da peca: consulta o CEP e ja deixa o endereco preenchido no checkout */
+async function simularFrete() {
+  const campoCep = $("#frete-cep"), res = $("#frete-res"), v = campoCep.value.replace(/\D/g, "");
+  if (v.length !== 8) { res.innerHTML = `<p class="frete-erro">Digite os 8 números do CEP.</p>`; campoCep.focus(); return; }
+  res.innerHTML = `<p>Consultando o CEP...</p>`;
+  try {
+    const d = await (await fetch(`https://viacep.com.br/ws/${v}/json/`)).json();
+    if (d.erro) throw 0;
+    Object.assign(ck, { cep: campoCep.value, rua: d.logradouro || "", bairro: d.bairro || "", cidade: d.localidade, uf: d.uf, cepAchado: true });
+    calcFretes();
+    res.innerHTML = `<p class="frete-local"><svg aria-hidden="true"><use href="#i-pin"/></svg>${esc(d.localidade)}/${esc(d.uf)}${d.logradouro ? `, ${esc(d.logradouro)}` : ""}</p>
+      <ul class="frete-lista">${opcoesFrete(d.uf, d.localidade).map(o => `<li><span><strong>${esc(o.nome)}</strong>${esc(o.prazo.replace(/, na Rua.*/, ""))}</span><b>${o.valor ? real(o.valor) : "Grátis"}</b></li>`).join("")}</ul>`;
+  } catch {
+    res.innerHTML = `<p class="frete-erro">Não encontramos este CEP. Confira os números.</p>`;
+  }
+}
+paginaPeca.addEventListener("click", e => { if (e.target.closest("#frete-calcular")) simularFrete(); });
+paginaPeca.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "frete-cep") { e.preventDefault(); simularFrete(); } });
+/* zoom na foto ao passar o mouse */
+paginaPeca.addEventListener("pointermove", e => {
+  const palco = e.target.closest(".galeria-palco");
+  if (!palco || e.pointerType !== "mouse" || !matchMedia("(hover: hover) and (min-width: 761px)").matches) return;
+  const r = palco.getBoundingClientRect();
+  palco.style.setProperty("--zx", `${((e.clientX - r.left) / r.width) * 100}%`);
+  palco.style.setProperty("--zy", `${((e.clientY - r.top) / r.height) * 100}%`);
+  palco.classList.add("zoom");
+});
+paginaPeca.addEventListener("pointerout", e => { const palco = e.target.closest(".galeria-palco"); if (palco && !palco.contains(e.relatedTarget)) palco.classList.remove("zoom"); });
 paginaPeca.addEventListener("input", e => {
+  if (e.target.id === "frete-cep") { const n = e.target.value.replace(/\D/g, "").slice(0, 8); e.target.value = n.length > 5 ? n.slice(0, 5) + "-" + n.slice(5) : n; return; }
   if (!e.target.matches(".medida input")) return;
   e.target.value = e.target.value.replace(/\D/g, "").slice(0, 3);
   medidas[e.target.name] = e.target.value;
@@ -1174,12 +1272,15 @@ function zerarCk() {
 }
 zerarCk();
 const desktop = matchMedia("(min-width: 761px)");
-function calcFretes() {
-  const sp = ck.uf.toUpperCase() === "SP", lista = [];
-  if (sp && ck.cidade.trim().toLowerCase() === "cravinhos") lista.push({ id: "retirar", nome: "Retirar na loja", prazo: "Pronto em até 1 dia útil, na Rua XV de Novembro, 129", valor: 0 });
+function opcoesFrete(uf, cidade) {
+  const sp = uf.toUpperCase() === "SP", lista = [];
+  if (sp && cidade.trim().toLowerCase() === "cravinhos") lista.push({ id: "retirar", nome: "Retirar na loja", prazo: "Pronto em até 1 dia útil, na Rua XV de Novembro, 129", valor: 0 });
   lista.push({ id: "pac", nome: "Correios PAC", prazo: sp ? "4 a 7 dias úteis" : "6 a 12 dias úteis", valor: sp ? 16.9 : 26.9 });
   lista.push({ id: "sedex", nome: "Correios SEDEX", prazo: sp ? "1 a 3 dias úteis" : "3 a 6 dias úteis", valor: sp ? 24.9 : 44.9 });
-  fretes = lista;
+  return lista;
+}
+function calcFretes() {
+  fretes = opcoesFrete(ck.uf, ck.cidade);
   if (!fretes.some(f => f.id === ck.frete)) ck.frete = null;
 }
 const freteAtual = () => fretes.find(f => f.id === ck.frete) || null;
